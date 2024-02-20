@@ -1,28 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-
+import { addCommasToNumber } from "../scripts/addCommasToNumber";
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 const CryptoList = () => {
   const [cryptoData, setCryptoData] = useState([]);
-  function addCommasToNumber(number) {
-    const numberString = number.toString();
-
-    // Split the string into integer and decimal parts (if any)
-    const [integerPart, decimalPart] = numberString.split(".");
-
-    // Add commas to the integer part
-    const formattedIntegerPart = integerPart.replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      ","
-    );
-
-    // If there is a decimal part, concatenate it back with the formatted integer part
-    if (decimalPart) {
-      return `${formattedIntegerPart}.${decimalPart}`;
-    } else {
-      return formattedIntegerPart;
-    }
-  }
 
   useEffect(() => {
     const fetchCryptoData = async () => {
@@ -43,23 +24,23 @@ const CryptoList = () => {
   return (
     <div className="mt-8">
       <h2 className="text-2xl font-semibold mb-4">Top 10 Cryptocurrencies</h2>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-        {cryptoData.map((crypto) => (
-          <div className="md:hover:scale-110 transition-transform duration-50 ">
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+        {cryptoData.map((crypto, i) => (
+          <div key={i}>
             <motion.li
               key={crypto.id}
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="bg-white dark:bg-gray-800 inline-flex md:flex md:flex-col  rounded-lg shadow-md dark:text-white "
+              className="bg-white dark:bg-gray-800 inline-flex md:flex md:flex-col w-full  rounded-lg shadow-md dark:text-white "
             >
               <div className="icon relative inline-flex md:flex justify-center border-e md:border-b md:border-e-0 border-zinc-100 dark:border-zinc-700">
                 <img
                   src={crypto.image}
                   alt={crypto.name}
-                  className="h-12 mx-auto my-4 rounded-lg w-full"
+                  className="h-12 mx-auto my-4 rounded-lg w-full opacity-75"
                 />
-                <div className="mask absolute rounded-s-lg md:rounded-bl-none md:rounded-t-lg backdrop-blur-[20px] w-full h-full">
+                <div className=" absolute rounded-s-lg md:rounded-bl-none md:rounded-t-lg backdrop-blur-[20px] w-full h-full">
                   <img
                     src={crypto.image}
                     alt={crypto.name + " shadow"}

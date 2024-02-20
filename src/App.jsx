@@ -17,7 +17,7 @@ function App() {
     }
   }, [darkMode]);
   return (
-    <div className="flex flex-col min-h-screen min-w-screen">
+    <div className="flex flex-col min-h-screen">
       <Header />
       <Main />
       <Footer />
