@@ -16,6 +16,8 @@ const CryptoTable = () => {
     key: null,
     direction: "desc",
   });
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
@@ -52,6 +54,16 @@ const CryptoTable = () => {
     return 0;
   });
 
+  const filteredCryptoData = sortedCryptoData.filter(
+    (crypto) =>
+      crypto.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      crypto.symbol.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   const renderSortIcon = (key) => {
     if (sortConfig.key === key) {
       return sortConfig.direction === "desc" ? (
@@ -65,11 +77,9 @@ const CryptoTable = () => {
     );
   };
 
-  const TableHeaderCell = ({ label, sortKey }) => (
+  const TableHeaderCell = ({ label, sortKey, className }) => (
     <th
-      className={`px-4 py-2 cursor-pointer group w-full text-end ${
-        label == "Name" && "!text-start"
-      }`}
+      className={`px-4 py-2 cursor-pointer group w-full text-end ${className}`}
       onClick={() => handleSort(sortKey)}
     >
       {label != "Name" && renderSortIcon(sortKey)}
@@ -79,16 +89,13 @@ const CryptoTable = () => {
   );
 
   const CryptoRow = ({ crypto, index }) => (
-    <motion.tr
+    <tr
       key={crypto.id}
       className={`${
         index % 2 === 0
           ? "bg-gray-100 dark:bg-gray-700"
           : "bg-white dark:bg-gray-800"
       } hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors whitespace-nowrap`}
-      initial={{ opacity: 20, y: -10 }}
-      animate={{ opacity: 100, y: 0 }}
-      transition={{ duration: 0.1, delay: index * 0.025 }} // Adding delay based on index
     >
       <td className="px-4 py-2">{crypto.market_cap_rank}</td>
       <td className="px-4 py-2">
@@ -121,18 +128,34 @@ const CryptoTable = () => {
         )}
         {crypto.price_change_percentage_24h}%
       </td>
-    </motion.tr>
+    </tr>
   );
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <input
+        type="text"
+        className="block w-full border-gray-300 z-50 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 mb-4"
+        placeholder="Search by name or symbol"
+        value={searchQuery}
+        onChange={handleSearch}
+      />
       <h2 className="text-3xl font-semibold mb-4">Top 100 Cryptocurrencies</h2>
       <div className="">
+        {" "}
         <table className="table-auto w-full rounded-lg overflow-hidden">
           <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap">
             <tr>
-              <TableHeaderCell label="#" sortKey="market_cap_rank" />
-              <TableHeaderCell label="Name" sortKey="name" />
+              <TableHeaderCell
+                className="w-min"
+                label="#"
+                sortKey="market_cap_rank"
+              />
+              <TableHeaderCell
+                className="!text-start"
+                label="Name"
+                sortKey="name"
+              />
               <TableHeaderCell
                 label="Current Price (USD)"
                 sortKey="current_price"
@@ -145,7 +168,7 @@ const CryptoTable = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedCryptoData.map((crypto, index) => (
+            {filteredCryptoData.map((crypto, index) => (
               <CryptoRow key={crypto.id} crypto={crypto} index={index} />
             ))}
           </tbody>
