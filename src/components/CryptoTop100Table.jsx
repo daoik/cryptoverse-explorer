@@ -41,6 +41,8 @@ const CryptoTop100Table = () => {
       if (e.key === "/") {
         inputRef.current.focus();
         e.preventDefault();
+      } else if (e.key === "Escape") {
+        inputRef.current.blur();
       }
     };
 
@@ -171,7 +173,7 @@ const CryptoTop100Table = () => {
         <h2 className="text-3xl font-semibold mb-4">
           Top 100 Cryptocurrencies
         </h2>
-        <form className="ml-auto w-80">
+        <form className="ml-auto w-80" onSubmit={(e) => e.preventDefault()}>
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -207,7 +209,7 @@ const CryptoTop100Table = () => {
                     /
                   </kbd>
                   <Tooltip
-                    className="opacity-0 group-hover:opacity-100 whitespace-nowrap"
+                    className="opacity-0 z-50 -bottom-12 group-hover:-bottom-10 group-hover:opacity-100 whitespace-nowrap"
                     content="Use to trigger search"
                   />
                 </div>
@@ -221,7 +223,7 @@ const CryptoTop100Table = () => {
           className="table-auto w-full rounded-lg overflow-hidden"
           style={{ tableLayout: "fixed" }}
         >
-          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap w-full sticky z-999 top-0">
+          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap w-full sticky z-10 top-0">
             <tr>
               <TableHeaderCell
                 className="w-10 text-end"
