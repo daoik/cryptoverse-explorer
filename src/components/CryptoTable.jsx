@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   FaCaretDown,
   FaCaretUp,
   FaChevronDown,
   FaChevronUp,
+  FaSearch,
+  FaTimesCircle,
 } from "react-icons/fa";
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
+import Tooltip from "./Tooltip";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
@@ -17,6 +20,8 @@ const CryptoTable = () => {
     direction: "desc",
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [showClearButton, setShowClearButton] = useState(false);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const fetchCryptoData = async () => {
@@ -32,6 +37,19 @@ const CryptoTable = () => {
     };
 
     fetchCryptoData();
+
+    const handleSlashKeyDown = (e) => {
+      if (e.key === "/") {
+        inputRef.current.focus();
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("keydown", handleSlashKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleSlashKeyDown);
+    };
   }, []);
 
   const handleSort = (key) => {
@@ -62,6 +80,20 @@ const CryptoTable = () => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+    setShowClearButton(e.target.value !== "");
+  };
+
+  const handleClear = () => {
+    setSearchQuery("");
+    setShowClearButton(false);
+    inputRef.current.focus();
+  };
+
+  const handleSlashKeyDown = (e) => {
+    if (e.key === "/") {
+      inputRef.current.focus();
+      e.preventDefault();
+    }
   };
 
   const renderSortIcon = (key) => {
@@ -112,10 +144,14 @@ const CryptoTable = () => {
         </div>
       </td>
 
-      <td className="px-4 py-2">${addCommasToNumber(crypto.current_price)}</td>
-      <td className="px-4 py-2">${addCommasToNumber(crypto.market_cap)}</td>
+      <td className="px-4 py-2 text-end">
+        ${addCommasToNumber(crypto.current_price)}
+      </td>
+      <td className="px-4 py-2 text-end">
+        ${addCommasToNumber(crypto.market_cap)}
+      </td>
       <td
-        className={`px-4 py-2  ${
+        className={`px-4 py-2 text-end ${
           crypto.price_change_percentage_24h >= 0
             ? "text-green-600"
             : "text-red-600"
@@ -132,22 +168,66 @@ const CryptoTable = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <input
-        type="text"
-        className="block w-full border-gray-300 z-50 dark:border-gray-700 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 mb-4"
-        placeholder="Search by name or symbol"
-        value={searchQuery}
-        onChange={handleSearch}
-      />
-      <h2 className="text-3xl font-semibold mb-4">Top 100 Cryptocurrencies</h2>
-      <div className="">
-        {" "}
-        <table className="table-auto w-full rounded-lg overflow-hidden">
-          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap">
+    <div className="container mx-auto px-4 py-8 ">
+      <div className="inline-flex w-full ">
+        <h2 className="text-3xl font-semibold mb-4">
+          Top 100 Cryptocurrencies
+        </h2>
+        <form className="ml-auto">
+          <label
+            htmlFor="default-search"
+            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+          >
+            Search
+          </label>
+          <div className="relative group">
+            <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <FaSearch className="opacity-40" />
+            </div>
+            <input
+              id="default-search"
+              className=" block w-full p-3 px-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-teal-500 dark:focus:border-teal-500"
+              placeholder="Search Cryptocurrencies"
+              required
+              value={searchQuery}
+              onChange={handleSearch}
+              onKeyDown={handleSlashKeyDown}
+              ref={inputRef}
+            />
+            {showClearButton ? (
+              <button
+                type="button"
+                className="absolute inset-y-0 hover:scale-105 pointer-cursor border-none end-0 flex items-center pr-3"
+                onClick={handleClear}
+              >
+                <FaTimesCircle className="opacity-40" />
+              </button>
+            ) : (
+              <div className="absolute group group-focus-within:invisible  inset-y-0 end-0 flex items-center pr-3">
+                <div className="relative">
+                  <kbd class="px-2 py-1.5  text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                    /
+                  </kbd>
+
+                  <Tooltip
+                    className="opacity-0 group-hover:opacity-100 whitespace-nowrap"
+                    content="Use to trigger search"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
+      <div className="w-full overflow-x-auto">
+        <table
+          className="table-auto w-full rounded-lg overflow-hidden"
+          style={{ tableLayout: "fixed" }}
+        >
+          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap w-full">
             <tr>
               <TableHeaderCell
-                className="w-min"
+                className="w-3"
                 label="#"
                 sortKey="market_cap_rank"
               />
