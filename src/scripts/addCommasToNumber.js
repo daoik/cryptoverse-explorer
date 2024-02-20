@@ -1,4 +1,8 @@
 export const addCommasToNumber = (number) => {
+  if (number === null || number === undefined) {
+    return null;
+  }
+
   const numberString = number.toString();
 
   // Split the string into integer and decimal parts (if any)

@@ -211,6 +211,7 @@ const CryptoTop100Table = () => {
                   <Tooltip
                     className="opacity-0 z-50 -bottom-12 group-hover:-bottom-10 group-hover:opacity-100 whitespace-nowrap"
                     content="Use to trigger search"
+                    showArrow={false}
                   />
                 </div>
               </div>
