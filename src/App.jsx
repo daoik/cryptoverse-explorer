@@ -1,6 +1,7 @@
 // App.js
 import React, { useEffect } from "react";
-import "./index.css"; // Import Tailwind CSS
+import "./index.css";
+import "./tailwind.css";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";

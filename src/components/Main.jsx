@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Card from "./Card";
 import CryptoList from "./CryptoList";
-import CryptoTable from "./CryptoTable";
+import CryptoTop100Table from "./CryptoTop100Table";
 import DXChart from "./DXChart";
 const Main = () => {
   return (
@@ -32,7 +32,7 @@ const Main = () => {
         </div> */}
         {/* <CryptoList /> */}
         {/* <DXChart id="bitcoin" /> */}
-        <CryptoTable />
+        <CryptoTop100Table />
       </div>
     </main>
   );
