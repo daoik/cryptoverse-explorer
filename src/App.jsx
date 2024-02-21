@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import "./index.css";
 import "./tailwind.css";
+import "./bg.css";
 import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
@@ -18,10 +19,10 @@ function App() {
     }
   }, [darkMode]);
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen w-screen">
       <Header />
       <Main />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import Homepage from "./Homepage";
 import { motion } from "framer-motion";
 import Card from "./Card";
 import CryptoList from "./CryptoList";
@@ -8,8 +9,8 @@ import ReChart from "./ReChart";
 import CryptoDetails from "./CryptoDetails";
 const Main = () => {
   return (
-    <main className="flex-grow bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-neutral-200 p-4 w-screen">
-      <div className="max-w-screen-2xl mx-auto">
+    <main className="flex-grow bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-neutral-200  w-full">
+      <div className="">
         {/* <motion.h2
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -34,10 +35,12 @@ const Main = () => {
         </div> */}
         {/* <CryptoList /> */}
         {/* <DXChart id="bitcoin" /> */}
+
+        {/* <CryptoDetails id={"bitcoin"} /> */}
+
         {/* <CryptoTop100Table /> */}
 
-        <CryptoDetails id={"ethereum"} />
-        {/* <ReChart id={"ethereum"} /> */}
+        <Homepage />
       </div>
     </main>
   );

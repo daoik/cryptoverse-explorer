@@ -92,9 +92,10 @@ const ReChart = ({ id }) => {
           Zoom Out
         </button>
       )}{" "}
-      <ResponsiveContainer>
+      <ResponsiveContainer width="99%">
         <LineChart
           height={400}
+          width={600}
           data={historicalData}
           margin={{
             top: 15,
@@ -125,6 +126,7 @@ const ReChart = ({ id }) => {
           <Tooltip content={<CustomTooltip />} />
           <Legend />
           <Line
+            name={id.toUpperCase() + "/USD"}
             type="natural"
             dataKey="price"
             stroke="#8884d8"
