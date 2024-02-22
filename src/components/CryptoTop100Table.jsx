@@ -221,10 +221,10 @@ const CryptoTop100Table = () => {
       </div>
       <div className="w-full overflow-x-auto">
         <table
-          className="table-auto w-full rounded-lg overflow-hidden"
+          className="table-auto w-full rounded-lg overflow-hidden border border-white"
           style={{ tableLayout: "fixed" }}
         >
-          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap w-full sticky z-10 top-0">
+          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap w-full ">
             <tr>
               <TableHeaderCell
                 className="w-10 text-end"

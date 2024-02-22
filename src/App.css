@@ -3,6 +3,7 @@
   margin: 0 auto;
   /* padding: 2rem; */
   text-align: center;
+  overflow: hidden;
 }
 
 .logo {
@@ -124,7 +125,7 @@ nav li {
   flex: 1;
 }
 
-.refresh {
+/* .refresh {
   padding: 10px;
   position: absolute;
   background: rgba(0, 0, 0, 0.4);
@@ -137,4 +138,4 @@ nav li {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-}
+} */

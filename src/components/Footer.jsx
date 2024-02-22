@@ -7,10 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="col-span-1">
             <h3 className="text-lg font-bold mb-4">About Us</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              scelerisque velit eget eros malesuada consectetur.
-            </p>
+            <p>Made with ❤️ by Dimitris Oikonomou, using the CoinGecko API</p>
           </div>
           <div className="col-span-1">
             <h3 className="text-lg font-bold mb-4">Contact Us</h3>

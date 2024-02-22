@@ -40,7 +40,7 @@ const CryptoSearch = () => {
       className="h-[700px] z-0 relative flex items-center justify-center w-full bg-[url('/nebula.jpg')]  bg-cover bg-fixed"
       style={{ backgroundPositionY: `${scrollY * 0.2}px` }} // Adjust the multiplier for the parallax effect
     >
-      <div className="dark:bg-black bg-neutral-600 opacity-40 z-10 absolute h-full w-full"></div>
+      <div className="dark:bg-black bg-pink-100 opacity-20 dark:opacity-40 z-10 absolute h-full w-full"></div>
       <form className="w-full mx-96 z-20" onSubmit={(e) => e.preventDefault()}>
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
