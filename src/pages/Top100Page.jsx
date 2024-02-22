@@ -1,10 +1,16 @@
 import React from "react";
 import CryptoTop100Table from "../components/CryptoTop100Table";
+import { AiOutlineCompass } from "react-icons/ai";
 
 function Top100Page() {
   return (
     <div className="transition-all duration-50 flex-grow bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-neutral-200  w-full">
-      <CryptoTop100Table />
+      <div className="text-xl opacity-80 mt-4 mb-10 inline-flex items-center   space-x-5">
+        Cryptoverse <AiOutlineCompass className="mx-2" /> Explorer
+      </div>
+      <div className="mx-auto px-32">
+        <CryptoTop100Table />
+      </div>
     </div>
   );
 }

@@ -155,7 +155,10 @@ const SideNavbar = () => {
         <div className="w-80 flex dark:bg-zinc-800 bg-zinc-200 shadow-2xl z-50 h-full transition-all ">
           <div className=" w-full  color-black m-[10px] mt-[20px] items-start flex justify-between ">
             <MenuToggle toggle={toggleNavbar} />{" "}
-            <AiOutlineCompass className="text-zinc-400 opacity-50" size={45} />
+            <AiOutlineCompass
+              className="text-gray-800 dark:text-neutral-200   opacity-70"
+              size={45}
+            />
             <button
               onClick={toggleDarkMode}
               className="outline-none border-none text-zinc-800 dark:text-neutral-200 bg-transparent hover:scale-125 transition-transform ease-in-out duration-200"

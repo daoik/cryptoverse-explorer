@@ -62,7 +62,7 @@ const CryptoDetails = ({ id }) => {
   const widthClass = `w-[${percentageDifference}%]`;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col m-10">
       <div className="flex sm:flex-col lg:flex-row">
         <div className="w-1/3 p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
           <div className="inline-flex items-center ">

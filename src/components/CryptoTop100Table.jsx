@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import Tooltip from "./Tooltip";
+import { Link } from "react-router-dom";
+import { AiOutlineCompass } from "react-icons/ai";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
@@ -131,19 +133,23 @@ const CryptoTop100Table = () => {
       } hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors whitespace-nowrap`}
     >
       <td className="px-4 py-2">{crypto.market_cap_rank}</td>
+
       <td className="px-4 py-2">
-        <div className="flex items-center">
-          <img
-            className="w-8 h-8 p-1"
-            src={crypto.image}
-            alt={`${crypto.name} Logo`}
-          />
-          <span className="ml-2">{crypto.name}</span>{" "}
-          <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
-            {crypto.symbol}
-          </span>
-        </div>
+        <Link key={crypto.id} to={`/coins/${crypto.id}`}>
+          <div className="flex items-center">
+            <img
+              className="w-8 h-8 p-1"
+              src={crypto.image}
+              alt={`${crypto.name} Logo`}
+            />
+            <span className="ml-2">{crypto.name}</span>{" "}
+            <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+              {crypto.symbol}
+            </span>
+          </div>
+        </Link>
       </td>
+
       <td className="px-4 py-2 text-end">
         ${addCommasToNumber(crypto.current_price)}
       </td>
@@ -168,7 +174,7 @@ const CryptoTop100Table = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8 ">
+    <div className="container mx-auto ">
       <div className="inline-flex w-full ">
         <h2 className="text-3xl font-semibold mb-4">
           Top 100 Cryptocurrencies
