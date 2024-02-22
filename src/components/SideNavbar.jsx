@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { motion, useCycle } from "framer-motion";
 import { Link } from "react-router-dom";
-import { GoHome, GoRocket, GoStar } from "react-icons/go";
+import { GoHome, GoMoon, GoRocket, GoStar, GoSun } from "react-icons/go";
 import useDarkModeStore from "../store/darkModeStore";
 import "../App.css";
 import { AiOutlineCompass } from "react-icons/ai";
@@ -48,7 +48,7 @@ const SideNavbar = () => {
     const Path = (props) => (
       <motion.path
         fill="transparent"
-        strokeWidth="4"
+        strokeWidth="2"
         className="stroke-zinc-800 dark:stroke-neutral-200"
         strokeLinecap="round"
         {...props}
@@ -163,7 +163,7 @@ const SideNavbar = () => {
               onClick={toggleDarkMode}
               className="outline-none border-none text-zinc-800 dark:text-neutral-200 bg-transparent hover:scale-125 transition-transform ease-in-out duration-200"
             >
-              {darkMode ? <FaSun size={23} /> : <FaMoon size={23} />}
+              {darkMode ? <GoSun size={23} /> : <GoMoon size={23} />}
             </button>
           </div>
 

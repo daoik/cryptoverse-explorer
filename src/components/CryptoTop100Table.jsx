@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import Tooltip from "./Tooltip";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineCompass } from "react-icons/ai";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
@@ -23,6 +23,10 @@ const CryptoTop100Table = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
   const inputRef = useRef(null);
+  const navigate = useNavigate();
+  const handleRowClick = (crypto) => {
+    navigate(`/coins/${crypto.id}`);
+  };
 
   useEffect(() => {
     const fetchCryptoData = async () => {
@@ -130,24 +134,23 @@ const CryptoTop100Table = () => {
         index % 2 === 0
           ? "bg-gray-100 dark:bg-gray-700"
           : "bg-white dark:bg-gray-800"
-      } hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors whitespace-nowrap`}
+      } cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors whitespace-nowrap `}
+      onClick={() => handleRowClick(crypto)}
     >
       <td className="px-4 py-2">{crypto.market_cap_rank}</td>
 
       <td className="px-4 py-2">
-        <Link key={crypto.id} to={`/coins/${crypto.id}`}>
-          <div className="flex items-center">
-            <img
-              className="w-8 h-8 p-1"
-              src={crypto.image}
-              alt={`${crypto.name} Logo`}
-            />
-            <span className="ml-2">{crypto.name}</span>{" "}
-            <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
-              {crypto.symbol}
-            </span>
-          </div>
-        </Link>
+        <div className="flex items-center">
+          <img
+            className="w-8 h-8 p-1"
+            src={crypto.image}
+            alt={`${crypto.name} Logo`}
+          />
+          <span className="ml-2">{crypto.name}</span>{" "}
+          <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+            {crypto.symbol}
+          </span>
+        </div>
       </td>
 
       <td className="px-4 py-2 text-end">
