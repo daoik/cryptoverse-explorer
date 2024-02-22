@@ -64,7 +64,7 @@ const CryptoDetails = ({ id }) => {
   return (
     <div className="flex flex-col m-10">
       <div className="flex sm:flex-col lg:flex-row">
-        <div className="w-1/3 p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
+        <div className=" xs:w-full  md:w-2/5 p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
           <div className="inline-flex items-center ">
             <img
               className="h-12 p-1"
@@ -75,9 +75,11 @@ const CryptoDetails = ({ id }) => {
             <span className="inline-block text-gray-700  dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
               {coin?.symbol}
             </span>
-            <span className="inline-block text-black dark:text-gray-300 px-1 text-xs bg-gray-100 dark:bg-gray-600 dark:border-black border rounded uppercase">
-              #{coin?.market_cap_rank}
-            </span>
+            {coin?.market_cap_rank && (
+              <span className="inline-block text-black dark:text-gray-300 px-1 text-xs bg-gray-100 dark:bg-gray-600 dark:border-black border rounded uppercase">
+                #{coin?.market_cap_rank}
+              </span>
+            )}
           </div>
           <div className="inline-flex items-center">
             <h2 className="font-bold">
@@ -178,7 +180,7 @@ const CryptoDetails = ({ id }) => {
           <div className="website inline-flex w-full justify-between mb-2">
             <div className="label inline-flex">Website</div>
             <a
-              className="font-semibold text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
+              className="font-semibold text-zinc-500 text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
               href={coin?.links?.homepage && coin.links.homepage[0]}
             >
               {coin?.links?.homepage &&
@@ -189,7 +191,7 @@ const CryptoDetails = ({ id }) => {
             <div className="wp inline-flex w-full justify-between mb-2">
               <div className="label inline-flex">Whitepaper</div>
               <a
-                className="font-semibold text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
+                className="font-semibold text-zinc-500 text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
                 href={coin?.links?.whitepaper}
               >
                 Whitepaper
@@ -200,7 +202,7 @@ const CryptoDetails = ({ id }) => {
             <div className="bs inline-flex w-full justify-between mb-2">
               <div className="label inline-flex">Blockchain Site</div>
               <a
-                className="font-semibold text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 max-w-48 rounded-lg overflow-x-hidden overflow-ellipsis"
+                className="font-semibold text-zinc-500 text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 max-w-48 rounded-lg overflow-x-hidden overflow-ellipsis"
                 href={coin?.links?.blockchain_site[0]}
               >
                 {replaceUnnecessary(
@@ -214,7 +216,7 @@ const CryptoDetails = ({ id }) => {
               <div className="forum inline-flex w-full justify-between mb-2">
                 <div className="label inline-flex">Official Forum</div>
                 <a
-                  className="font-semibold text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
+                  className="font-semibold text-zinc-500 text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
                   href={coin?.links?.official_forum_url[0]}
                 >
                   {replaceUnnecessary(
@@ -227,7 +229,7 @@ const CryptoDetails = ({ id }) => {
             <div className="chat inline-flex w-full justify-between mb-2">
               <div className="label inline-flex">Chat URL</div>
               <a
-                className="font-semibold text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
+                className="font-semibold text-zinc-500 text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
                 href={coin?.links?.chat_url[0]}
               >
                 {replaceUnnecessary(coin?.links?.chat_url[0]?.toString())}
@@ -238,7 +240,7 @@ const CryptoDetails = ({ id }) => {
             <div className="announcement inline-flex w-full justify-between mb-2">
               <div className="label inline-flex">Announcement URL</div>
               <a
-                className="font-semibold text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
+                className="font-semibold text-zinc-500 text-sm hover:bg-gray-300 bg-gray-200 p-1 px-2 rounded-lg overflow-x-hidden overflow-ellipsis"
                 href={coin?.links?.announcement_url[0]}
               >
                 {replaceUnnecessary(
@@ -250,7 +252,7 @@ const CryptoDetails = ({ id }) => {
           <div className="divider mb-3 mt-auto opacity-20 w-full h-0.5 bg-gray-500" />
           <div className="categories flex flex-wrap ">
             {coin?.categories?.map((category, index) => (
-              <div className="text-xs tracking-tighter flex text-neutral-50 p-0.5 rounded bg-zinc-400 m-1 hover:opacity-90">
+              <div className="text-xs tracking-tighter flex bg-gray-500 text-neutral-100 p-0.5 px-1.5 rounded m-1 ">
                 <div className="whitespace-nowrap inline-flex items-center">
                   {/* <FaTag className="p-0.5" /> */}
                   {category}

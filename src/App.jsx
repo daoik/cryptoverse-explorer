@@ -11,6 +11,7 @@ import SideNavbar from "./components/SideNavbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Top100Page from "./pages/Top100Page";
 import CryptoDashboardPage from "./pages/CryptoDashboardPage";
+import AllCoinsPage from "./pages/AllCoinsPage";
 function App() {
   const darkMode = useDarkModeStore((state) => state.darkMode);
 
@@ -29,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/top100" element={<Top100Page />} />
+          <Route path="/coins/all" element={<AllCoinsPage />} />
           <Route path="/coins/:id" element={<CryptoDashboardPage />} />
           {/* <Route path="/top100" element={<Top100 />} />
           <Route path="/favs" element={<Favs />} /> */}

@@ -132,9 +132,9 @@ const CryptoTop100Table = () => {
       key={crypto.id}
       className={`${
         index % 2 === 0
-          ? "bg-gray-100 dark:bg-gray-700"
-          : "bg-white dark:bg-gray-800"
-      } cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors whitespace-nowrap `}
+          ? "bg-zinc-200 dark:bg-zinc-700"
+          : "bg-gray-50 dark:bg-zinc-800"
+      } cursor-pointer hover:bg-zinc-400 dark:hover:bg-zinc-500 transition-colors whitespace-nowrap `}
       onClick={() => handleRowClick(crypto)}
     >
       <td className="px-4 py-2">{crypto.market_cap_rank}</td>
@@ -233,7 +233,7 @@ const CryptoTop100Table = () => {
           className="table-auto w-full rounded-lg overflow-hidden border border-white"
           style={{ tableLayout: "fixed" }}
         >
-          <thead className="bg-gray-200 dark:bg-gray-800 whitespace-nowrap w-full ">
+          <thead className="bg-zinc-300 dark:bg-zinc-900 whitespace-nowrap w-full ">
             <tr>
               <TableHeaderCell
                 className="w-10 text-end"

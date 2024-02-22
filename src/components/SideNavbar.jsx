@@ -2,7 +2,14 @@ import React, { useRef } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 import { motion, useCycle } from "framer-motion";
 import { Link } from "react-router-dom";
-import { GoHome, GoMoon, GoRocket, GoStar, GoSun } from "react-icons/go";
+import {
+  GoHome,
+  GoMoon,
+  GoRocket,
+  GoStar,
+  GoSun,
+  GoTelescope,
+} from "react-icons/go";
 import useDarkModeStore from "../store/darkModeStore";
 import "../App.css";
 import { AiOutlineCompass } from "react-icons/ai";
@@ -30,6 +37,7 @@ const SideNavbar = () => {
         {[
           { label: "Home", link: "/" },
           { label: "Top 100", link: "/top100" },
+          { label: "All Coins", link: "/coins/all" },
           { label: "Favs", link: "/" },
         ].map(({ label, link }, i) => (
           <motion.li key={i} variants={variants(i)}>
@@ -56,7 +64,7 @@ const SideNavbar = () => {
     );
     return (
       <button
-        className="nav-button hover:scale-125 transition-transform ease-in-out duration-200"
+        className="nav-button hover:scale-125 transition-transform ease-in-out "
         onClick={toggle}
       >
         <svg width="23" height="23" viewBox="0 0 20 20">
@@ -72,7 +80,7 @@ const SideNavbar = () => {
               closed: { opacity: 1 },
               open: { opacity: 0 },
             }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: 1 }}
           />
           <Path
             variants={{
@@ -119,6 +127,11 @@ const SideNavbar = () => {
                 className="transition-all group-hover:scale-125"
                 size={20}
               />
+            ) : label === "All Coins" ? (
+              <GoTelescope
+                className="transition-all group-hover:scale-125"
+                size={20}
+              />
             ) : null}
           </div>
           <div
@@ -161,7 +174,7 @@ const SideNavbar = () => {
             />
             <button
               onClick={toggleDarkMode}
-              className="outline-none border-none text-zinc-800 dark:text-neutral-200 bg-transparent hover:scale-125 transition-transform ease-in-out duration-200"
+              className="outline-none border-none text-zinc-800 dark:text-neutral-200 bg-transparent hover:scale-125 transition-transform ease-in-out "
             >
               {darkMode ? <GoSun size={23} /> : <GoMoon size={23} />}
             </button>

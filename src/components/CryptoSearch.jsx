@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaSearch, FaTimesCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Tooltip from "./Tooltip";
 const CryptoSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
@@ -130,10 +131,15 @@ const CryptoSearch = () => {
             </button>
           ) : (
             <div className="absolute group group-focus-within:invisible inset-y-0 end-0 flex items-center pr-3">
-              <div className="relative">
+              <div className="relative group3">
                 <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
                   /
                 </kbd>
+                <Tooltip
+                  className="opacity-0 z-50 -bottom-12 group3-hover:-bottom-10 group-hover:opacity-100 whitespace-nowrap"
+                  content="Use to trigger search"
+                  showArrow={false}
+                />
               </div>
             </div>
           )}
