@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaSearch, FaTimesCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
-
+import { useNavigate } from "react-router-dom";
 const CryptoSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    setShowClearButton(e.target.value.length > 0);
-  };
-
-  const handleClear = () => {
-    setSearchQuery("");
-    setShowClearButton(false);
-  };
-
-  const handleSlashKeyDown = (e) => {
-    if (e.key === "/" && !showClearButton) {
-      e.preventDefault();
-    }
-  };
+  const [searchResults, setSearchResults] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const inputRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -34,6 +21,65 @@ const CryptoSearch = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    // Fetch data from CoinGecko API when the component mounts
+    fetch("https://api.coingecko.com/api/v3/coins/list")
+      .then((response) => response.json())
+      .then((data) => {
+        setSearchResults(data);
+        setFilteredResults(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const handleSlashKeyDown = (e) => {
+      if (e.key === "/") {
+        inputRef.current.focus();
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("keydown", handleSlashKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleSlashKeyDown);
+    };
+  }, []);
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    setShowClearButton(query !== "");
+
+    // Filter search results based on the query
+    const filtered = searchResults.filter((result) =>
+      result.name.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredResults(filtered);
+  };
+
+  const handleClear = () => {
+    setSearchQuery("");
+    setShowClearButton(false);
+    inputRef.current.focus();
+    setFilteredResults(searchResults);
+  };
+
+  const handleSlashKeyDown = (e) => {
+    if (e.key === "/") {
+      inputRef.current.focus();
+      e.preventDefault();
+    }
+  };
+  const navigate = useNavigate();
+  const handleRowClick = (crypto) => {
+    navigate(`/coins/${crypto.id}`);
+  };
+
   return (
     <div
       id="CryptoSearch"
@@ -41,7 +87,10 @@ const CryptoSearch = () => {
       style={{ backgroundPositionY: `${scrollY * 0.2}px` }} // Adjust the multiplier for the parallax effect
     >
       <div className="dark:bg-black bg-pink-100 opacity-20 dark:opacity-40 z-10 absolute h-full w-full"></div>
-      <form className="w-full mx-96 z-20" onSubmit={(e) => e.preventDefault()}>
+      <form
+        className="w-full flex flex-col items-center mx-96 z-20"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -57,7 +106,7 @@ const CryptoSearch = () => {
         >
           Search
         </label>
-        <div className="relative group w-full">
+        <div className="relative group w-4/6 ">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <FaSearch className="opacity-40" />
           </div>
@@ -69,11 +118,12 @@ const CryptoSearch = () => {
             value={searchQuery}
             onChange={handleSearch}
             onKeyDown={handleSlashKeyDown}
+            ref={inputRef}
           />
           {showClearButton ? (
             <button
               type="button"
-              className="absolute inset-y-0 hover:scale-105 pointer-cursor border-none end-0 flex items-center pr-3"
+              className="absolute inset-y-0 hover:scale-105 cursor-pointer border-none end-0 flex items-center pr-3"
               onClick={handleClear}
             >
               <FaTimesCircle className="opacity-40" />
@@ -86,6 +136,30 @@ const CryptoSearch = () => {
                 </kbd>
               </div>
             </div>
+          )}
+
+          {/* Dropdown for filtered search results */}
+          {searchQuery.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2 }}
+              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto absolute max-h-64 w-full scroll shadow-lg"
+            >
+              <ul>
+                {filteredResults.map((coin) => (
+                  <li
+                    key={coin.id}
+                    className="px-6 py-2 hover:bg-zinc-700 hover:shadow hover:text-zinc-100 cursor-pointer"
+                    onClick={() => {
+                      handleRowClick(coin);
+                    }}
+                  >
+                    {coin.name}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           )}
         </div>
       </form>
