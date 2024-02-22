@@ -1,21 +1,20 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-const Card = ({ title, body, button, link }) => {
+const Card = ({ icon, title, description, delay }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5, delay: 0.2 }}
-      className="p-6 rounded-lg shadow-md bg-white dark:bg-gray-800 flex flex-col"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: delay ? delay : 0 }}
+      className="bg-white text-gray-800 dark:text-zinc-300 rounded-lg p-6 shadow-lg flex flex-col items-center bg-gradient-to-b from-blue-300 to-purple-300 dark:from-blue-900 dark:to-purple-900 "
+      style={{ width: 250 }}
     >
-      <h3 className="text-xl font-semibold mb-4 text-teal-700 dark:text-teal-300">
+      <div className="text-3xl  fill-zing-50 mb-4">{icon}</div>
+      <div className="text-lg text-zinc-800 dark:text-zinc-50 font-bold mb-2">
         {title}
-      </h3>
-      <p className="text-gray-700 mb-4 dark:text-white">{body}</p>
-      <button className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded dark:bg-teal-700 dark:hover:bg-teal-600 mt-auto">
-        {button}
-      </button>
+      </div>
+      <p className="text-sm text-center">{description}</p>
     </motion.div>
   );
 };
