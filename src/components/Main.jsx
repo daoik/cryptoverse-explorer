@@ -1,5 +1,5 @@
 import React from "react";
-import Homepage from "./Homepage";
+import Homepage from "../pages/Homepage";
 import { motion } from "framer-motion";
 import Card from "./Card";
 import CryptoList from "./CryptoList";
@@ -34,13 +34,12 @@ const Main = () => {
           />
         </div> */}
         {/* <CryptoList /> */}
-        {/* <DXChart id="bitcoin" /> */}
 
+        <Homepage />
         {/* <CryptoDetails id={"bitcoin"} /> */}
 
         {/* <CryptoTop100Table /> */}
-
-        <Homepage />
+        {/* <DXChart id="bitcoin" /> */}
       </div>
     </main>
   );

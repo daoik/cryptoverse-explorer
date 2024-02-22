@@ -72,7 +72,7 @@ const CryptoDetails = ({ id }) => {
               alt={coin?.name}
             />
             <h3>{coin?.name}</h3>
-            <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+            <span className="inline-block text-gray-700  dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
               {coin?.symbol}
             </span>
             <span className="inline-block text-black dark:text-gray-300 px-1 text-xs bg-gray-100 dark:bg-gray-600 dark:border-black border rounded uppercase">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaSearch, FaTimesCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -21,18 +21,32 @@ const CryptoSearch = () => {
       e.preventDefault();
     }
   };
+  const [scrollY, setScrollY] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(-3200 + window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <div
       id="#CryptoSearch"
-      className="h-[700px] flex items-center justify-center w-full bg-gradient-radial from-neutral-200 to-neutral-400 dark:from-slate-600  dark:to-slate-900"
+      className="h-[700px] z-0 relative flex items-center justify-center w-full bg-[url('/nebula.jpg')]  bg-cover bg-fixed"
+      style={{ backgroundPositionY: `${scrollY * 0.2}px` }} // Adjust the multiplier for the parallax effect
     >
-      <form className=" w-full mx-96" onSubmit={(e) => e.preventDefault()}>
+      <div className="dark:bg-black bg-neutral-600 opacity-40 z-10 absolute h-full w-full"></div>
+      <form className="w-full mx-96 z-20" onSubmit={(e) => e.preventDefault()}>
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="mb-10 w-full text-center text-3xl tracking-wide whitespace-nowrap font-bold text-gray-900 dark:text-zinc-100"
+          className="mb-10 w-full text-center text-3xl tracking-wide whitespace-nowrap font-bold text-zinc-100"
         >
           {" "}
           START YOUR JOURNEY TODAY
