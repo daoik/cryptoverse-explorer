@@ -3,10 +3,11 @@ import React, { useEffect } from "react";
 import "./index.css";
 import "./tailwind.css";
 import "./bg.css";
-import Header from "./components/Header";
+import Header from "./components/SideNavbar";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 import useDarkModeStore from "./store/darkModeStore";
+import SideNavbar from "./components/SideNavbar";
 function App() {
   const darkMode = useDarkModeStore((state) => state.darkMode);
 
@@ -19,10 +20,10 @@ function App() {
     }
   }, [darkMode]);
   return (
-    <div className="flex flex-col min-h-screen w-screen">
-      <Header />
+    <div className="flex flex-col min-h-screen w-screen relative overflow-hidden">
+      <SideNavbar />
       <Main />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
