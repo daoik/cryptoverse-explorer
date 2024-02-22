@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { GoHome, GoRocket, GoStar } from "react-icons/go";
 import useDarkModeStore from "../store/darkModeStore";
 import "../App.css";
+import { AiOutlineCompass } from "react-icons/ai";
 
 const SideNavbar = () => {
   const { darkMode, toggleDarkMode } = useDarkModeStore();
@@ -47,8 +48,8 @@ const SideNavbar = () => {
     const Path = (props) => (
       <motion.path
         fill="transparent"
-        strokeWidth="3"
-        stroke="hsl(0, 0%, 18%)"
+        strokeWidth="4"
+        className="stroke-zinc-800 dark:stroke-neutral-200"
         strokeLinecap="round"
         {...props}
       />
@@ -58,7 +59,7 @@ const SideNavbar = () => {
         className="nav-button hover:scale-125 transition-transform ease-in-out duration-200"
         onClick={toggle}
       >
-        <svg width="23" height="23" viewBox="0 0 23 23">
+        <svg width="23" height="23" viewBox="0 0 20 20">
           <Path
             variants={{
               closed: { d: "M 2 2.5 L 20 2.5" },
@@ -151,14 +152,18 @@ const SideNavbar = () => {
   return (
     <motion.nav initial={false} animate={isOpen ? "open" : "closed"}>
       <motion.div className="nav-background" variants={sidebar}>
-        <div className="w-80 bg-zinc-200 shadow-2xl z-50 h-full ">
-          <MenuToggle toggle={toggleNavbar} />
-          <button
-            onClick={toggleDarkMode}
-            className="outline-none border-none  bg-transparent hover:scale-125 transition-transform ease-in-out duration-200"
-          >
-            {darkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
-          </button>
+        <div className="w-80 flex dark:bg-zinc-800 bg-zinc-200 shadow-2xl z-50 h-full transition-all ">
+          <div className=" w-full  color-black m-[10px] mt-[20px] items-start flex justify-between ">
+            <MenuToggle toggle={toggleNavbar} />{" "}
+            <AiOutlineCompass className="text-zinc-400 opacity-50" size={45} />
+            <button
+              onClick={toggleDarkMode}
+              className="outline-none border-none text-zinc-800 dark:text-neutral-200 bg-transparent hover:scale-125 transition-transform ease-in-out duration-200"
+            >
+              {darkMode ? <FaSun size={23} /> : <FaMoon size={23} />}
+            </button>
+          </div>
+
           <Navigation />
         </div>
       </motion.div>
