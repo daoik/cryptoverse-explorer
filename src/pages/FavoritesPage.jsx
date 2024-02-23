@@ -1,5 +1,4 @@
 import React from "react";
-import FavoriteButton from "../components/FavoriteButton";
 import CardCoin from "../components/CardCoin";
 import useFavoriteStore from "../store/favoriteStore";
 import { AiOutlineCompass } from "react-icons/ai";
