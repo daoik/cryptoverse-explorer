@@ -11,6 +11,7 @@ import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import Tooltip from "./Tooltip";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
 const AllCoinsTable = () => {
@@ -66,7 +67,9 @@ const AllCoinsTable = () => {
 
   useEffect(() => {
     // Fetch data from CoinGecko API when the component mounts
-    fetch("https://api.coingecko.com/api/v3/coins/list")
+    fetch(
+      `https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${APIKEY}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(data);
@@ -105,16 +108,18 @@ const AllCoinsTable = () => {
       );
     }
     return (
-      <FaCaretDown className="opacity-0 group-hover:opacity-75 transition-opacity inline p-0.5 pe-1" />
+      <FaCaretDown className="opacity-25 group-hover:opacity-75 transition-opacity inline p-0.5 px-1" />
     );
   };
   const TableHeaderCell = ({ label, sortKey, className }) => (
     <th
-      className={`px-4 py-2 cursor-pointer group text-end ${className}`}
+      className={`px-4 py-2  cursor-pointer group  ${className} `}
       onClick={() => handleSort(sortKey)}
     >
+      {" "}
       {label !== "Name" && renderSortIcon(sortKey)}
       {label}
+      {/* {renderSortIcon(sortKey)} */}
       {label === "Name" && renderSortIcon(sortKey)}
     </th>
   );
@@ -252,11 +257,11 @@ const AllCoinsTable = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto absolute max-h-64 w-full scroll shadow-lg"
+              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 z-30 overflow-x-hidden text-start rounded-md overflow-auto absolute max-h-64 w-full scroll shadow-lg"
             >
               <ul>
                 {filteredResults.map((coin) => (
-                  <li
+                  <div
                     key={coin.id}
                     className="px-6 py-2 hover:bg-zinc-700 hover:shadow hover:text-zinc-100 cursor-pointer"
                     onClick={() => {
@@ -264,36 +269,39 @@ const AllCoinsTable = () => {
                     }}
                   >
                     {coin.name}
-                  </li>
+                  </div>
                 ))}
               </ul>
             </motion.div>
           )}
         </form>{" "}
       </div>
-      <div className="w-full overflow-x-auto">
-        <table
-          className="table-auto w-full rounded-lg overflow-hidden border border-white"
-          style={{ tableLayout: "fixed" }}
-        >
-          <thead className="bg-zinc-300 dark:bg-zinc-900 whitespace-nowrap w-full ">
+      <div className="">
+        <table className="table-auto w-full rounded-lg overflow-hidden">
+          <thead className="bg-zinc-300 dark:bg-zinc-900  w-full ">
             <tr>
               <TableHeaderCell
-                className="w-10 text-end"
+                className="w-10 text-end "
                 label="#"
                 sortKey="market_cap_rank"
               />
               <TableHeaderCell
-                className="!text-start"
+                className="text-start "
                 label="Name"
                 sortKey="name"
               />
               <TableHeaderCell
+                className="text-end "
                 label="Current Price (USD)"
                 sortKey="current_price"
               />
-              <TableHeaderCell label="Market Cap (USD)" sortKey="market_cap" />
               <TableHeaderCell
+                className="text-end "
+                label="Market Cap (USD)"
+                sortKey="market_cap"
+              />
+              <TableHeaderCell
+                className="text-end "
                 label="24h Change (%)"
                 sortKey="price_change_percentage_24h"
               />

@@ -3,6 +3,8 @@ import { FaSearch, FaTimesCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "./Tooltip";
+const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
+
 const CryptoSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
@@ -25,7 +27,9 @@ const CryptoSearch = () => {
 
   useEffect(() => {
     // Fetch data from CoinGecko API when the component mounts
-    fetch("https://api.coingecko.com/api/v3/coins/list")
+    fetch(
+      `https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${APIKEY}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setSearchResults(data);
@@ -150,7 +154,7 @@ const CryptoSearch = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto absolute max-h-64 w-full scroll shadow-lg"
+              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
             >
               <ul>
                 {filteredResults.map((coin) => (

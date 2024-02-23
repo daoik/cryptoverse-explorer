@@ -57,14 +57,14 @@ const SideNavbar = () => {
       <motion.path
         fill="transparent"
         strokeWidth="2"
-        className="stroke-zinc-800 dark:stroke-neutral-200"
+        className="stroke-zinc-800 dark:stroke-neutral-200 "
         strokeLinecap="round"
         {...props}
       />
     );
     return (
       <button
-        className="nav-button hover:scale-125 transition-transform ease-in-out "
+        className="nav-button hover:scale-125 transition-transform ease-in-out !pointer-events-auto"
         onClick={toggle}
       >
         <svg width="23" height="23" viewBox="0 0 20 20">
@@ -163,7 +163,11 @@ const SideNavbar = () => {
     },
   };
   return (
-    <motion.nav initial={false} animate={isOpen ? "open" : "closed"}>
+    <motion.nav
+      className={`${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+      initial={false}
+      animate={isOpen ? "open" : "closed"}
+    >
       <motion.div className="nav-background" variants={sidebar}>
         <div className="w-80 flex dark:bg-zinc-800 bg-zinc-200 shadow-2xl z-50 h-full transition-all ">
           <div className=" w-full  color-black m-[10px] mt-[20px] items-start flex justify-between ">

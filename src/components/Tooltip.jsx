@@ -5,7 +5,7 @@ const Tooltip = ({ content, className, showArrow }) => {
     <div
       id="tooltip3"
       role="tooltip"
-      className={`${className} absolute -left-14 -ml-1 mt-3  transition-all duration-150 ease-in-out bg-gray-800 dark:bg-gray-300 px-3 py-2 rounded`}
+      className={`${className} absolute -left-14 -ml-1 mt-3 pointer-events-none transition-all duration-150 ease-in-out bg-gray-800 dark:bg-gray-300 px-3 py-2 rounded`}
     >
       {showArrow && (
         <svg
