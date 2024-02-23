@@ -3,12 +3,13 @@ import { FaSearch, FaTimesCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "./Tooltip";
+import { debounce } from "lodash"; // Import debounce utility
+
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
 const CryptoSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
   const inputRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
@@ -25,20 +26,31 @@ const CryptoSearch = () => {
     };
   }, []);
 
+  // Fetch data from CoinGecko API with debounce
   useEffect(() => {
-    // Fetch data from CoinGecko API when the component mounts
-    fetch(
-      `https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${APIKEY}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setSearchResults(data);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/search?query=${searchQuery}&x_cg_demo_api_key=${APIKEY}`
+        );
+        const data = await response.json();
         setFilteredResults(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
-  }, []);
+      }
+    };
+
+    const debouncedFetchData = debounce(fetchData, 300); // Debounce for 300 milliseconds
+    if (searchQuery !== "") {
+      debouncedFetchData();
+    } else {
+      setFilteredResults([]);
+    }
+
+    return () => {
+      debouncedFetchData.cancel(); // Cancel debounce on component unmount
+    };
+  }, [searchQuery]);
 
   useEffect(() => {
     const handleSlashKeyDown = (e) => {
@@ -59,27 +71,15 @@ const CryptoSearch = () => {
     const query = e.target.value;
     setSearchQuery(query);
     setShowClearButton(query !== "");
-
-    // Filter search results based on the query
-    const filtered = searchResults.filter((result) =>
-      result.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredResults(filtered);
   };
 
   const handleClear = () => {
     setSearchQuery("");
     setShowClearButton(false);
     inputRef.current.focus();
-    setFilteredResults(searchResults);
+    setFilteredResults([]);
   };
 
-  const handleSlashKeyDown = (e) => {
-    if (e.key === "/") {
-      inputRef.current.focus();
-      e.preventDefault();
-    }
-  };
   const navigate = useNavigate();
   const handleRowClick = (crypto) => {
     navigate(`/coins/${crypto.id}`);
@@ -122,7 +122,6 @@ const CryptoSearch = () => {
             required
             value={searchQuery}
             onChange={handleSearch}
-            onKeyDown={handleSlashKeyDown}
             ref={inputRef}
           />
           {showClearButton ? (
@@ -149,7 +148,7 @@ const CryptoSearch = () => {
           )}
 
           {/* Dropdown for filtered search results */}
-          {searchQuery.length > 0 && (
+          {searchQuery?.length > 0 && filteredResults?.coins?.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -157,7 +156,7 @@ const CryptoSearch = () => {
               className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
             >
               <ul>
-                {filteredResults.map((coin) => (
+                {filteredResults.coins.map((coin) => (
                   <li
                     key={coin.id}
                     className="px-6 py-2 hover:bg-zinc-700 hover:shadow hover:text-zinc-100 cursor-pointer"
@@ -165,6 +164,11 @@ const CryptoSearch = () => {
                       handleRowClick(coin);
                     }}
                   >
+                    <img
+                      src={coin.thumb}
+                      alt=""
+                      className="w-6 h-6 inline-block mr-2"
+                    />
                     {coin.name}
                   </li>
                 ))}

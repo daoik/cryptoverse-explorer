@@ -11,6 +11,7 @@ import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import Tooltip from "./Tooltip";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { debounce } from "lodash";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
@@ -66,19 +67,30 @@ const AllCoinsTable = () => {
   }, [page, itemsPerPage]);
 
   useEffect(() => {
-    // Fetch data from CoinGecko API when the component mounts
-    fetch(
-      `https://api.coingecko.com/api/v3/coins/list?x_cg_demo_api_key=${APIKEY}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setSearchResults(data);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.coingecko.com/api/v3/search?query=${searchQuery}&x_cg_demo_api_key=${APIKEY}`
+        );
+        const data = await response.json();
         setFilteredResults(data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-      });
-  }, []);
+      }
+    };
+
+    const debouncedFetchData = debounce(fetchData, 300); // Debounce for 300 milliseconds
+    if (searchQuery !== "") {
+      debouncedFetchData();
+    } else {
+      setFilteredResults([]);
+    }
+
+    return () => {
+      debouncedFetchData.cancel(); // Cancel debounce on component unmount
+    };
+  }, [searchQuery]);
+
   const handleClear = () => {
     setSearchQuery("");
     setShowClearButton(false);
@@ -252,24 +264,29 @@ const AllCoinsTable = () => {
               </div>
             )}
           </div>
-          {searchQuery.length > 0 && (
+          {searchQuery?.length > 0 && filteredResults?.coins?.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 z-30 overflow-x-hidden text-start rounded-md overflow-auto absolute max-h-64 w-full scroll shadow-lg"
+              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
             >
               <ul>
-                {filteredResults.map((coin) => (
-                  <div
+                {filteredResults.coins.map((coin) => (
+                  <li
                     key={coin.id}
                     className="px-6 py-2 hover:bg-zinc-700 hover:shadow hover:text-zinc-100 cursor-pointer"
                     onClick={() => {
                       handleRowClick(coin);
                     }}
                   >
+                    <img
+                      src={coin.thumb}
+                      alt=""
+                      className="w-6 h-6 inline-block mr-2"
+                    />
                     {coin.name}
-                  </div>
+                  </li>
                 ))}
               </ul>
             </motion.div>
