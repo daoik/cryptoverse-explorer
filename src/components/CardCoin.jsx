@@ -35,7 +35,7 @@ const CardCoin = ({ coin }) => {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         onClick={handeCardClick}
-        className="p-3  m-3 self-center transform-all  cursor-pointer hover:outline outline-2 outline-purple-900 hover:bg-zinc-100 rounded-lg shadow-md bg-zinc-200 dark:bg-gray-600 dark:hover:bg-zinc-800 flex flex-col"
+        className="p-3 w-72  m-3 self-center transform-all  cursor-pointer hover:outline outline-2 outline-purple-900 hover:bg-zinc-100 rounded-lg shadow-md bg-zinc-200 dark:bg-gray-600 dark:hover:bg-zinc-800 flex flex-col"
       >
         <h3 className="text-xl  inline-flex  w-full justify-between items-center font-semibold mb-4 text-orange-700 dark:text-orange-300">
           <img className="h-6 pe-2" src={coinData.image?.large} />{" "}

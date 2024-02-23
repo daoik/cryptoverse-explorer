@@ -4,12 +4,19 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-8">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="col-span-1">
-            <h3 className="text-lg font-bold mb-4">About Us</h3>
-            <p>Made with ❤️ by Dimitris Oikonomou, using the CoinGecko API</p>
+        <div className="flex w-full justify-center items-center">
+          <div className="flex flex-col w-full justify-end items-center">
+            {/* <h3 className="text-lg font-bold mb-4">About</h3> */}
+            <p>
+              Made with ❤️ by{" "}
+              <a href="https://github.com/daoik">Dimitris Oikonomou </a>
+            </p>
+            <p>
+              using the <a href="https://www.coingecko.com/en/api">CoinGecko</a>{" "}
+              API
+            </p>
           </div>
-          <div className="col-span-1">
+          {/* <div className="col-span-1">
             <h3 className="text-lg font-bold mb-4">Contact Us</h3>
             <p>Email: example@example.com</p>
             <p>Phone: 123-456-7890</p>
@@ -26,9 +33,9 @@ const Footer = () => {
               </a>
               <a href="#" className="text-gray-300 hover:text-white">
                 Instagram
-              </a>
+              </a> 
             </div>
-          </div>
+          </div>*/}
         </div>
       </div>
     </footer>

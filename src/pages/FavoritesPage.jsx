@@ -3,6 +3,7 @@ import FavoriteButton from "../components/FavoriteButton";
 import CardCoin from "../components/CardCoin";
 import useFavoriteStore from "../store/favoriteStore";
 import { AiOutlineCompass } from "react-icons/ai";
+import moon from "../assets/moon.png";
 
 const FavoritesPage = () => {
   const favorites = useFavoriteStore((state) => state.favorites);
@@ -14,13 +15,20 @@ const FavoritesPage = () => {
       </div>
       <div className="m-10 container text-start">
         <div className="inline-flex w-full ">
-          <div className="favorites flex-col">
-            <h2 className="text-3xl font-semibold mb-4">Favorites</h2>
-            <div className="flex">
+          <div className="favorites w-full items-center  justify-center flex-col">
+            <h2 className="text-3xl font-semibold text-center mb-4">
+              Favorites
+            </h2>
+            <div className="flex  justify-center flex-wrap ">
               {favorites.map(
                 (coin) => coin !== null && <CardCoin coin={coin} key={coin} />
               )}
             </div>
+            <img
+              src={moon}
+              alt="moon"
+              className="w-100vw opacity-20 scale-150 object-contain overflow-visible"
+            />
           </div>
         </div>
       </div>

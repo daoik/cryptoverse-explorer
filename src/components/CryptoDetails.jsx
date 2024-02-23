@@ -61,7 +61,7 @@ const CryptoDetails = ({ id }) => {
   return (
     <div className="flex flex-col m-10">
       <div className="flex sm:flex-col lg:flex-row">
-        <div className=" xs:w-full flex flex-col  md:w-2/5 p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
+        <div className=" xs:w-full flex flex-col flex-1  p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
           <div className="inline-flex w-full items-center ">
             <img
               className="h-12 p-1"
@@ -99,7 +99,7 @@ const CryptoDetails = ({ id }) => {
             </div>
           </div>
           <div className="24hbar my-2">
-            <div className="bar w-[100%] h-4  overflow-hidden bg-gray-200 dark:bg-gray-400 rounded-full">
+            <div className="bar w-full h-4  overflow-hidden bg-gray-200 dark:bg-gray-400 rounded-full">
               <div
                 style={{ width: `${percentageDifference}%` }}
                 className={`bar-fill bg-gradient-to-r rounded-full from-[#f79d00] to-[#64f38c] h-full  w-[${widthClass}%]`}
@@ -116,7 +116,7 @@ const CryptoDetails = ({ id }) => {
             </div>
           </div>
           <div className="values space-y-3 mt-3">
-            <div className="market-cap inline-flex w-full justify-between">
+            <div className="market-cap inline-flex w-full justify-between me-3">
               <div className="label inline-flex">
                 Market Cap
                 <InfoTooltipIcon content={tooltipData.market_cap} />
@@ -125,9 +125,12 @@ const CryptoDetails = ({ id }) => {
                 ${addCommasToNumber(coin?.market_data?.market_cap.usd)}
               </div>
             </div>
-            <div className="fdv inline-flex w-full justify-between">
-              <div className="label inline-flex">
-                Fully Diluted Valuation{" "}
+            <div className="fdv inline-flex w-full justify-between me-3">
+              <div className="label  inline-flex">
+                <div className="whitespace-nowrap">
+                  {" "}
+                  Fully Diluted Valuation{" "}
+                </div>
                 <InfoTooltipIcon content={tooltipData.fdv} />
               </div>
               <div className="value tracking-wide font-semibold">
@@ -137,7 +140,7 @@ const CryptoDetails = ({ id }) => {
                 )}
               </div>
             </div>
-            <div className="volume inline-flex w-full justify-between">
+            <div className="volume inline-flex w-full justify-between me-3">
               <div className="label inline-flex">
                 24h Volume <InfoTooltipIcon content={tooltipData.vol} />
               </div>
@@ -145,7 +148,7 @@ const CryptoDetails = ({ id }) => {
                 ${addCommasToNumber(coin?.market_data?.total_volume?.usd)}
               </div>
             </div>
-            <div className="circ inline-flex w-full justify-between">
+            <div className="circ inline-flex w-full justify-between me-3">
               <div className="label inline-flex">
                 Circulating Supply{" "}
                 <InfoTooltipIcon content={tooltipData.circ} />
@@ -156,7 +159,7 @@ const CryptoDetails = ({ id }) => {
                 )}
               </div>
             </div>
-            <div className="max inline-flex w-full justify-between">
+            <div className="max inline-flex w-full justify-between me-3">
               <div className="label inline-flex">
                 Max Supply <InfoTooltipIcon content={tooltipData.max} />
               </div>
