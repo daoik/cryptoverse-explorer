@@ -253,7 +253,10 @@ const CryptoDetails = ({ id }) => {
           <div className="divider mb-3 mt-auto opacity-20 w-full h-0.5 bg-gray-500" />
           <div className="categories flex flex-wrap ">
             {coin?.categories?.map((category, index) => (
-              <div className="text-xs tracking-tighter flex bg-gray-500 text-neutral-100 p-0.5 px-1.5 rounded m-1 ">
+              <div
+                key={category}
+                className="text-xs tracking-tighter flex bg-gray-500 text-neutral-100 p-0.5 px-1.5 rounded m-1 "
+              >
                 <div className="whitespace-nowrap inline-flex items-center">
                   {/* <FaTag className="p-0.5" /> */}
                   {category}

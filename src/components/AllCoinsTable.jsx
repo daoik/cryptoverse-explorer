@@ -399,7 +399,7 @@ const AllCoinsTable = () => {
             min={1}
             // type="number"
             value={page}
-            defaultValue={page}
+            // defaultValue={page}
             onChange={(e) => setPage(e.target.value)}
             className="w-10 p-1 py-2 outline-none h-full bg-zinc-100 border hover:border-[#646cff] active:border-[#646cff] border-[#ccc] dark:bg-zinc-800 rounded-lg text-center dark:text-zinc-100"
           />
