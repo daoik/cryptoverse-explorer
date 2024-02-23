@@ -5,6 +5,7 @@ import { FaChevronDown, FaChevronUp, FaTag } from "react-icons/fa";
 import tooltipData from "./tooltipData.json";
 import Tooltip from "./Tooltip";
 import InfoTooltipIcon from "./InfoTooltipIcon";
+import FavoriteButton from "./FavoriteButton";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
@@ -55,17 +56,13 @@ const CryptoDetails = ({ id }) => {
     );
   }, [coin]);
 
-  useEffect(() => {
-    console.log(percentageDifference);
-  }, [percentageDifference]);
-
   const widthClass = `w-[${percentageDifference}%]`;
 
   return (
     <div className="flex flex-col m-10">
       <div className="flex sm:flex-col lg:flex-row">
-        <div className=" xs:w-full  md:w-2/5 p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
-          <div className="inline-flex items-center ">
+        <div className=" xs:w-full flex flex-col  md:w-2/5 p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
+          <div className="inline-flex w-full items-center ">
             <img
               className="h-12 p-1"
               src={coin?.image?.large}
@@ -80,6 +77,7 @@ const CryptoDetails = ({ id }) => {
                 #{coin?.market_cap_rank}
               </span>
             )}
+            <FavoriteButton className="ml-auto" id={id} />
           </div>
           <div className="inline-flex items-center">
             <h2 className="font-bold">

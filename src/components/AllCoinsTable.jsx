@@ -242,7 +242,6 @@ const AllCoinsTable = () => {
   );
   const handlePagination = (direction) => {
     if (direction === "next") {
-      console.log("Current page:", page); // Add this line for debugging
       setPage(page + 1);
     } else if (direction === "prev" && page > 1) {
       setPage(page - 1);

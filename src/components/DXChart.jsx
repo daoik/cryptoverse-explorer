@@ -25,21 +25,7 @@ const DXChart = ({ id }) => {
       </select>
     );
   };
-  useEffect(() => {
-    // const fetchHistoricalData = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=2?x_cg_demo_api_key=${APIKEY}`
-    //     );
-    //     const data = await response.json();
-    //     setHistoricalData(data.prices);
-    //     console.log(data.prices.length);
-    //   } catch (error) {
-    //     console.error("Error fetching historical data:", error);
-    //   }
-    // };
-    // fetchHistoricalData();
-  }, [id]);
+
   const candles = useMemo(
     () => generateCandlesData({ withVolume: true }),
     [id]

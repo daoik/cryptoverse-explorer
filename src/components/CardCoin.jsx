@@ -16,11 +16,10 @@ const CardCoin = ({ coin }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${coin}?sparkline=true?x_cg_demo_api_key=${APIKEY}`
+          `https://api.coingecko.com/api/v3/coins/${coin}?sparkline=false?x_cg_demo_api_key=${APIKEY}`
         );
         const data = await response.json();
         setCoinData(data);
-        console.log(data.market_data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

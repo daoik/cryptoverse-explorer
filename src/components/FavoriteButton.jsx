@@ -11,10 +11,6 @@ const FavoriteButton = ({ id, className }) => {
   );
 
   useEffect(() => {
-    // console.log("Favorites:", favorites);
-    console.log("id:", id, className);
-    // console.log("isFavorite:", isFavorite);
-    // console.log(JSON.stringify({ favorites, id }));
     setIsFavorite(favorites.includes(id));
   }, [favorites, id]);
 
@@ -29,9 +25,6 @@ const FavoriteButton = ({ id, className }) => {
       }
     }
   };
-
-  //   console.log("Favorites:", favorites);
-  //   console.log("isFavorite:", isFavorite);
 
   return (
     <button
