@@ -6,7 +6,7 @@ import Card from "./Card";
 const CryptoInfoSection = () => {
   return (
     <div className=" text-white w-full py-20 bg-gradient-radial from-gray-100 to-zinc-200 dark:from-gray-800 dark:to-zinc-800 shadow-xl">
-      <div className="container mx-auto flex w-full  justify-around">
+      <div className="container mx-auto  flex flex-col lg:!flex-row w-full items-center space-y-4  justify-around">
         <Card
           icon={<AiOutlineInfoCircle size={40} />}
           title="About"

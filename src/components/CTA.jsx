@@ -21,7 +21,7 @@ const CTA = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className=" my-4 text-gray-800 dark:text-zinc-300 rounded-lg p-6 flex flex-col items-center  "
         >
-          <img className="h-96" src={astronaut} alt="astronaut" />
+          <img className="h-96 object-cover" src={astronaut} alt="astronaut" />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 40 }}

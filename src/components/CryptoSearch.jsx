@@ -93,14 +93,14 @@ const CryptoSearch = () => {
     >
       <div className="dark:bg-black bg-pink-100 opacity-20 dark:opacity-40 z-10 absolute h-full w-full"></div>
       <form
-        className="w-full flex flex-col items-center mx-96 z-20"
+        className="w-full flex flex-col items-center lg:mx-96 z-20"
         onSubmit={(e) => e.preventDefault()}
       >
         <motion.h3
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="mb-10 w-full text-center text-3xl tracking-wide whitespace-nowrap font-bold text-zinc-100"
+          className="mb-10 w-full text-center text-3xl tracking-wide lg:whitespace-nowrap font-bold text-zinc-100"
         >
           {" "}
           START YOUR JOURNEY TODAY
@@ -111,14 +111,14 @@ const CryptoSearch = () => {
         >
           Search
         </label>
-        <div className="relative group w-4/6 ">
+        <div className="relative group sm::w-4/6 ">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <FaSearch className="opacity-40" />
           </div>
           <input
             id="default-search"
             className="block w-full p-3 px-10 text-xl text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-teal-500 focus:border-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-            placeholder="Search Cryptocurrencies"
+            placeholder="Search Cryptos..."
             required
             value={searchQuery}
             onChange={handleSearch}

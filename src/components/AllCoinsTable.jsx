@@ -261,10 +261,10 @@ const AllCoinsTable = () => {
 
   return (
     <div className="container mx-auto ">
-      <div className="inline-flex w-full ">
+      <div className="md:inline-flex md:w-full w-full ">
         <h2 className="text-3xl font-semibold mb-4">All Coins</h2>
         <form
-          className="ml-auto w-80 relative"
+          className="md:!ml-auto md:!mr-0 mx-auto w-80 relative"
           onSubmit={(e) => e.preventDefault()}
         >
           <label
