@@ -6,13 +6,13 @@ Welcome to Cryptoverse Explorer, your ultimate destination for exploring the vas
 
 To begin your journey into the cryptoverse, simply click the "Get Started" button below.
 
-[![Get Started](https://img.shields.io/badge/Get%20Started-Explore%20Cryptoverse-blue)](#search)
+[![Get Started](https://img.shields.io/badge/Get%20Started-Explore%20Cryptoverse-blue)](https://daoik.github.io/cryptoverse-explorer)
 
 ## Search for Cryptos
 
 Use the `/` key or click on the search bar below to start searching for your favorite cryptocurrencies. Explore their market info, price changes, and more!
 
-[Search Cryptos](#search)
+[Search Cryptos](https://daoik.github.io/cryptoverse-explorer)
 
 ## Dashboard
 
