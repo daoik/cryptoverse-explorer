@@ -33,8 +33,6 @@ function App() {
           <Route path="/coins/all" element={<AllCoinsPage />} />
           <Route path="/coins/:id" element={<CryptoDashboardPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
-          {/* <Route path="/top100" element={<Top100 />} />
-          <Route path="/favs" element={<Favs />} /> */}
         </Routes>
 
         <Footer />

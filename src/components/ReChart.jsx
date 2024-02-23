@@ -28,11 +28,6 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const ReChart = ({ id }) => {
   const [historicalData, setHistoricalData] = useState([]);
-  const [refAreaLeft, setRefAreaLeft] = useState("");
-  const [refAreaRight, setRefAreaRight] = useState("");
-  const [left, setLeft] = useState("dataMin");
-  const [right, setRight] = useState("dataMax");
-  const [zoomed, setZoomed] = useState(false);
 
   useEffect(() => {
     const fetchHistoricalData = async () => {
@@ -63,35 +58,8 @@ const ReChart = ({ id }) => {
     return tickItem >= 1000 ? `${(tickItem / 1000).toFixed(2)}k` : tickItem;
   };
 
-  const zoom = () => {
-    if (refAreaLeft === refAreaRight || refAreaRight === "") {
-      setRefAreaLeft("");
-      setRefAreaRight("");
-      return;
-    }
-
-    if (refAreaLeft > refAreaRight) setRefAreaLeft("");
-    setRefAreaRight("");
-    setLeft(refAreaLeft);
-    setRight(refAreaRight);
-    setZoomed(true);
-  };
-
-  const zoomOut = () => {
-    setRefAreaLeft("");
-    setRefAreaRight("");
-    setLeft("dataMin");
-    setRight("dataMax");
-    setZoomed(false);
-  };
-
   return (
     <div className="chart h-full w-full p-3 ">
-      {zoomed && (
-        <button type="button" onClick={zoomOut}>
-          Zoom Out
-        </button>
-      )}{" "}
       <ResponsiveContainer width="99%">
         <LineChart
           height={400}
@@ -103,15 +71,12 @@ const ReChart = ({ id }) => {
             left: 0,
             bottom: 5,
           }}
-          // onMouseDown={(e) => setRefAreaLeft(e.activeLabel)}
-          // onMouseMove={(e) => refAreaLeft && setRefAreaRight(e.activeLabel)}
-          // onMouseUp={zoom}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             allowDataOverflow
             dataKey="time"
-            domain={[left, right]}
+            domain={[dataMin, dataMax]}
             type="number"
             tickFormatter={formatXAxis}
             dy={10}
@@ -133,13 +98,6 @@ const ReChart = ({ id }) => {
             activeDot={{ r: 4 }}
             dot={false}
           />
-          {refAreaLeft && refAreaRight ? (
-            <ReferenceArea
-              x1={refAreaLeft}
-              x2={refAreaRight}
-              strokeOpacity={0.3}
-            />
-          ) : null}
         </LineChart>{" "}
       </ResponsiveContainer>
     </div>
