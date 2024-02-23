@@ -6,7 +6,7 @@ import "./bg.css";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 import useDarkModeStore from "./store/darkModeStore";
-import CryptoTop100Table from "./components/CryptoTop100Table";
+import FavoritesPage from "./pages/FavoritesPage";
 import SideNavbar from "./components/SideNavbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Top100Page from "./pages/Top100Page";
@@ -32,6 +32,7 @@ function App() {
           <Route path="/top100" element={<Top100Page />} />
           <Route path="/coins/all" element={<AllCoinsPage />} />
           <Route path="/coins/:id" element={<CryptoDashboardPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
           {/* <Route path="/top100" element={<Top100 />} />
           <Route path="/favs" element={<Favs />} /> */}
         </Routes>

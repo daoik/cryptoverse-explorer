@@ -12,6 +12,8 @@ import Tooltip from "./Tooltip";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
+import FavoriteButton from "./FavoriteButton";
+import useFavoriteStore from "../store/favoriteStore";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
@@ -29,6 +31,7 @@ const AllCoinsTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
   const inputRef = useRef(null);
+  const favorites = useFavoriteStore((state) => state.favorites);
 
   const navigate = useNavigate();
   const handleRowClick = (crypto) => {
@@ -105,12 +108,40 @@ const AllCoinsTable = () => {
   };
   const handleSort = (key) => {
     let direction = "desc";
-    if (sortConfig.key === key && sortConfig.direction === "desc") {
-      direction = "asc";
+    if (key === "favorite") {
+      // Sort based on favorites
+      const sortedCryptoDataCopy = [...cryptoData].sort((a, b) => {
+        const isAFavorite = favorites.includes(a.symbol);
+        const isBFavorite = favorites.includes(b.symbol);
+
+        // Move favorites to the beginning
+        if (isAFavorite && !isBFavorite) return -1;
+        if (!isAFavorite && isBFavorite) return 1;
+
+        // Maintain other sorting order
+        return 0;
+      });
+
+      setCryptoData(sortedCryptoDataCopy);
+      setSortConfig({ key, direction });
+    } else {
+      if (sortConfig.key === key && sortConfig.direction === "desc") {
+        direction = "asc";
+      }
+
+      setSortConfig({ key, direction });
     }
-    setSortConfig({ key, direction });
   };
 
+  const sortedCryptoData = [...cryptoData].sort((a, b) => {
+    if (sortConfig.direction === "desc") {
+      return a[sortConfig.key] > b[sortConfig.key] ? -1 : 1;
+    }
+    if (sortConfig.direction === "asc") {
+      return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
+    }
+    return 0;
+  });
   const renderSortIcon = (key) => {
     if (sortConfig.key === key) {
       return sortConfig.direction === "desc" ? (
@@ -146,7 +177,7 @@ const AllCoinsTable = () => {
       } cursor-pointer hover:bg-zinc-400 dark:hover:bg-zinc-500 transition-colors whitespace-nowrap `}
       onClick={() => handleRowClick(crypto)}
     >
-      <td className="px-4 py-2">{crypto.market_cap_rank}</td>
+      <td className="px-4 py-2 ">{crypto.market_cap_rank}</td>
 
       <td className="px-4 py-2">
         <div className="flex items-center">
@@ -182,6 +213,10 @@ const AllCoinsTable = () => {
         )}
         {crypto.price_change_percentage_24h}%
       </td>
+      <td>
+        {" "}
+        <FavoriteButton id={crypto.id} />
+      </td>
     </tr>
   );
   const handlePagination = (direction) => {
@@ -204,15 +239,6 @@ const AllCoinsTable = () => {
     setFilteredResults(filtered);
   };
 
-  const sortedCryptoData = [...cryptoData].sort((a, b) => {
-    if (sortConfig.direction === "desc") {
-      return a[sortConfig.key] > b[sortConfig.key] ? -1 : 1;
-    }
-    if (sortConfig.direction === "asc") {
-      return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
-    }
-    return 0;
-  });
   return (
     <div className="container mx-auto ">
       <div className="inline-flex w-full ">
@@ -321,6 +347,11 @@ const AllCoinsTable = () => {
                 className="text-end "
                 label="24h Change (%)"
                 sortKey="price_change_percentage_24h"
+              />
+              <TableHeaderCell
+                className="text-end "
+                label=""
+                sortKey="favorite"
               />
             </tr>
           </thead>

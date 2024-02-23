@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import {
   FaCaretDown,
   FaCaretUp,
@@ -10,12 +10,14 @@ import {
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import Tooltip from "./Tooltip";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineCompass } from "react-icons/ai";
+import FavoriteButton from "./FavoriteButton";
+import useFavoriteStore from "../store/favoriteStore";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
 const CryptoTop100Table = () => {
   const [cryptoData, setCryptoData] = useState([]);
+
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "desc",
@@ -24,6 +26,8 @@ const CryptoTop100Table = () => {
   const [showClearButton, setShowClearButton] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+  const favorites = useFavoriteStore((state) => state.favorites);
+
   const handleRowClick = (crypto) => {
     navigate(`/coins/${crypto.id}`);
   };
@@ -59,25 +63,43 @@ const CryptoTop100Table = () => {
     };
   }, []);
 
-  const handleSort = (key) => {
-    let direction = "desc";
-    if (sortConfig.key === key && sortConfig.direction === "desc") {
-      direction = "asc";
-    }
-    setSortConfig({ key, direction });
-  };
+  const sortedCryptoData = useMemo(() => {
+    const sortedData = [...cryptoData].sort((a, b) => {
+      if (sortConfig.key) {
+        if (a[sortConfig.key] < b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? -1 : 1;
+        }
+        if (a[sortConfig.key] > b[sortConfig.key]) {
+          return sortConfig.direction === "asc" ? 1 : -1;
+        }
+      }
+      return 0;
+    });
+    return sortedData;
+  }, [cryptoData, sortConfig]);
 
-  const sortedCryptoData = [...cryptoData].sort((a, b) => {
-    if (sortConfig.key) {
-      if (a[sortConfig.key] < b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? -1 : 1;
+  const handleSort = (key) => {
+    if (key === "favorite") {
+      const sortedCryptoDataCopy = [...cryptoData].sort((a, b) => {
+        const directionFactor = sortConfig.direction === "asc" ? 1 : -1;
+        return (
+          directionFactor *
+          (favorites.includes(a.symbol) - favorites.includes(b.symbol))
+        );
+      });
+      setCryptoData(sortedCryptoDataCopy);
+    } else {
+      // Create a copy of sortConfig to avoid directly modifying the state
+      const newSortConfig = { ...sortConfig };
+      if (newSortConfig.key === key && newSortConfig.direction === "desc") {
+        newSortConfig.direction = "asc";
+      } else {
+        newSortConfig.key = key;
+        newSortConfig.direction = "desc";
       }
-      if (a[sortConfig.key] > b[sortConfig.key]) {
-        return sortConfig.direction === "asc" ? 1 : -1;
-      }
+      setSortConfig(newSortConfig);
     }
-    return 0;
-  });
+  };
 
   const filteredCryptoData = sortedCryptoData.filter(
     (crypto) =>
@@ -112,7 +134,7 @@ const CryptoTop100Table = () => {
       );
     }
     return (
-      <FaCaretDown className="opacity-0 group-hover:opacity-75 transition-opacity inline p-0.5 pe-1" />
+      <FaCaretDown className="opacity-25 group-hover:opacity-75 transition-opacity inline p-0.5 pe-1" />
     );
   };
 
@@ -172,6 +194,10 @@ const CryptoTop100Table = () => {
           <FaChevronDown className="p-0.5 pe-1 inline-flex" />
         )}
         {crypto.price_change_percentage_24h}%
+      </td>
+      <td>
+        {" "}
+        <FavoriteButton id={crypto.id} />
       </td>
     </tr>
   );
@@ -253,6 +279,11 @@ const CryptoTop100Table = () => {
               <TableHeaderCell
                 label="24h Change (%)"
                 sortKey="price_change_percentage_24h"
+              />
+              <TableHeaderCell
+                className="text-end "
+                label=""
+                sortKey="favorite"
               />
             </tr>
           </thead>

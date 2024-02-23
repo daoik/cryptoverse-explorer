@@ -71,7 +71,7 @@ const SideNavbar = () => {
     };
 
     return (
-      <motion.li
+      <motion.div
         className="group pointer-cursor"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -110,7 +110,7 @@ const SideNavbar = () => {
             {label}
           </div>
         </Link>
-      </motion.li>
+      </motion.div>
     );
   };
   const sidebar = {
@@ -166,7 +166,7 @@ const SideNavbar = () => {
               { label: "Home", link: "/" },
               { label: "Top 100", link: "/top100" },
               { label: "All Coins", link: "/coins/all" },
-              { label: "Favs", link: "/" },
+              { label: "Favs", link: "/favorites" },
             ].map(({ label, link }, i) => (
               <motion.li key={i} variants={variants(i)}>
                 <MenuItem
