@@ -220,7 +220,7 @@ const CryptoTop100Table = () => {
 
   return (
     <div className="container mx-auto ">
-      <div className="inline-flex w-full ">
+      <div className="md:inline-flex md:w-full  ">
         <h2 className="text-3xl font-semibold mb-4">
           Top 100 Cryptocurrencies
         </h2>
