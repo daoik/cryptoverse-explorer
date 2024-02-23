@@ -76,7 +76,7 @@ const ReChart = ({ id }) => {
           <XAxis
             allowDataOverflow
             dataKey="time"
-            domain={[dataMin, dataMax]}
+            domain={["dataMin", "dataMax"]}
             type="number"
             tickFormatter={formatXAxis}
             dy={10}
