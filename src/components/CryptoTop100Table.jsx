@@ -29,7 +29,7 @@ const CryptoTop100Table = () => {
   const favorites = useFavoriteStore((state) => state.favorites);
 
   const handleRowClick = (crypto) => {
-    navigate(`/coins/${crypto.id}`);
+    navigate(`/cryptoverse-explorer/coins/${crypto.id}`);
   };
 
   useEffect(() => {

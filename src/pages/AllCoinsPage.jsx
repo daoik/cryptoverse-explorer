@@ -9,7 +9,7 @@ function AllCoinsPage() {
       <div className="text-xl opacity-80 mt-4 mb-10 inline-flex items-center   space-x-5">
         Cryptoverse <AiOutlineCompass className="mx-2" /> Explorer
       </div>
-      <div className="mx-auto px-32">
+      <div className="mx-auto md:px-32">
         <AllCoinsTable />
       </div>
       <BackToTopButton />

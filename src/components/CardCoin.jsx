@@ -10,7 +10,7 @@ const CardCoin = ({ coin }) => {
   const [coinData, setCoinData] = useState({});
   const navigate = useNavigate();
   const handeCardClick = (coin) => {
-    navigate(`/coins/${coinData.id}`);
+    navigate(`cryptoverse-explorer/coins/${coinData.id}`);
   };
   useEffect(() => {
     const fetchData = async () => {

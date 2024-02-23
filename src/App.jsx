@@ -34,11 +34,23 @@ function App() {
         <SideNavbar />
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/top100" element={<Top100Page />} />
-            <Route path="/coins/all" element={<AllCoinsPage />} />
-            <Route path="/coins/:id" element={<CryptoDashboardPage />} />
-            <Route path="/favorites" element={<FavoritesPage />} />
+            <Route path="/cryptoverse-explorer" element={<Main />} />
+            <Route
+              path="/cryptoverse-explorer/top100"
+              element={<Top100Page />}
+            />
+            <Route
+              path="/cryptoverse-explorer/coins/all"
+              element={<AllCoinsPage />}
+            />
+            <Route
+              path="/cryptoverse-explorer/coins/:id"
+              element={<CryptoDashboardPage />}
+            />
+            <Route
+              path="/cryptoverse-explorer/favorites"
+              element={<FavoritesPage />}
+            />
           </Routes>
         </Suspense>
         <Footer />

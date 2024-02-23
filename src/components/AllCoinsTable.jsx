@@ -38,7 +38,7 @@ const AllCoinsTable = () => {
 
   const navigate = useNavigate();
   const handleRowClick = (crypto) => {
-    navigate(`/coins/${crypto.id}`);
+    navigate(`/cryptoverse-explorer/coins/${crypto.id}`);
   };
 
   useEffect(() => {

@@ -163,10 +163,10 @@ const SideNavbar = () => {
             }}
           >
             {[
-              { label: "Home", link: "/" },
-              { label: "Top 100", link: "/top100" },
-              { label: "All Coins", link: "/coins/all" },
-              { label: "Favs", link: "/favorites" },
+              { label: "Home", link: "/cryptoverse-explorer" },
+              { label: "Top 100", link: "/cryptoverse-explorer/top100" },
+              { label: "All Coins", link: "/cryptoverse-explorer/coins/all" },
+              { label: "Favs", link: "/cryptoverse-explorer/favorites" },
             ].map(({ label, link }, i) => (
               <motion.li key={i} variants={variants(i)}>
                 <MenuItem
