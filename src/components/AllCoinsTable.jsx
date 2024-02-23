@@ -333,7 +333,7 @@ const AllCoinsTable = () => {
                       className="w-6 h-6 inline-block mr-2"
                     />
                     {coin.name}{" "}
-                    <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+                    <span className="inline-block dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
                       {coin.symbol}
                     </span>
                   </li>

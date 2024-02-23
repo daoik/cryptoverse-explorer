@@ -159,7 +159,7 @@ const CryptoSearch = () => {
                 {filteredResults.coins.map((coin) => (
                   <li
                     key={coin.id}
-                    className="px-6 py-2 hover:bg-zinc-700 hover:shadow hover:text-zinc-100 cursor-pointer"
+                    className="px-6  py-2 hover:bg-zinc-700 hover:shadow hover:text-zinc-100 cursor-pointer"
                     onClick={() => {
                       handleRowClick(coin);
                     }}
@@ -170,7 +170,7 @@ const CryptoSearch = () => {
                       className="w-6 h-6 inline-block mr-2"
                     />
                     {coin.name}{" "}
-                    <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+                    <span className="inline-block  hover:text-gray-100 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
                       {coin.symbol}
                     </span>
                   </li>

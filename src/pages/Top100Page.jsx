@@ -1,6 +1,7 @@
 import React from "react";
 import CryptoTop100Table from "../components/CryptoTop100Table";
 import { AiOutlineCompass } from "react-icons/ai";
+import BackToTopButton from "../components/BackToTopButton";
 
 function Top100Page() {
   return (
@@ -8,9 +9,10 @@ function Top100Page() {
       <div className="text-xl opacity-80 mt-4 mb-10 inline-flex items-center   space-x-5">
         Cryptoverse <AiOutlineCompass className="mx-2" /> Explorer
       </div>
-      <div className="mx-auto px-32">
+      <div className="mx-auto mb-24  px-32">
         <CryptoTop100Table />
       </div>
+      <BackToTopButton />
     </div>
   );
 }

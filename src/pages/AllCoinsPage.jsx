@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineCompass } from "react-icons/ai";
 import AllCoinsTable from "../components/AllCoinsTable";
+import BackToTopButton from "../components/BackToTopButton";
 
 function AllCoinsPage() {
   return (
@@ -11,6 +12,7 @@ function AllCoinsPage() {
       <div className="mx-auto px-32">
         <AllCoinsTable />
       </div>
+      <BackToTopButton />
     </div>
   );
 }

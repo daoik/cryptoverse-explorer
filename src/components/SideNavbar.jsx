@@ -142,7 +142,7 @@ const SideNavbar = () => {
       animate={isOpen ? "open" : "closed"}
     >
       <motion.div className="nav-background" variants={sidebar}>
-        <div className="w-80 flex dark:bg-zinc-800 bg-zinc-200 shadow-2xl z-50 h-full transition-all ">
+        <div className="w-80 flex dark:bg-zinc-800 bg-zinc-300 shadow-2xl z-50 h-full transition-all ">
           <div className=" w-full  color-black m-[10px] mt-[20px] items-start flex justify-between ">
             <MenuToggle toggle={toggleNavbar} />{" "}
             <AiOutlineCompass
