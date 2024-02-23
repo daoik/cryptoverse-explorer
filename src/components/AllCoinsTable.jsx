@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  FaArrowLeft,
+  FaArrowRight,
   FaCaretDown,
   FaCaretUp,
   FaChevronDown,
@@ -14,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
+import Select from "react-select";
 
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
@@ -108,29 +111,47 @@ const AllCoinsTable = () => {
   };
   const handleSort = (key) => {
     let direction = "desc";
-    if (key === "favorite") {
-      // Sort based on favorites
-      const sortedCryptoDataCopy = [...cryptoData].sort((a, b) => {
-        const isAFavorite = favorites.includes(a.symbol);
-        const isBFavorite = favorites.includes(b.symbol);
 
-        // Move favorites to the beginning
+    if (sortConfig.key === key) {
+      direction = sortConfig.direction === "desc" ? "asc" : "desc";
+    }
+
+    let sortedCryptoDataCopy = [...cryptoData];
+
+    if (key === "favorite") {
+      sortedCryptoDataCopy = sortedCryptoDataCopy.sort((a, b) => {
+        const isAFavorite = favorites.includes(a.id);
+        const isBFavorite = favorites.includes(b.id);
+
         if (isAFavorite && !isBFavorite) return -1;
         if (!isAFavorite && isBFavorite) return 1;
 
-        // Maintain other sorting order
+        // If both are favorites or both are not favorites, compare their positions
+        if (isAFavorite && isBFavorite) {
+          // When sorting in descending order, prioritize the favorite IDs first
+          if (sortConfig.direction === "desc") {
+            return favorites.indexOf(a.id) - favorites.indexOf(b.id);
+          } else {
+            // When sorting in ascending order, prioritize the favorite IDs last
+            return favorites.indexOf(b.id) - favorites.indexOf(a.id);
+          }
+        }
+
         return 0;
       });
-
-      setCryptoData(sortedCryptoDataCopy);
-      setSortConfig({ key, direction });
     } else {
-      if (sortConfig.key === key && sortConfig.direction === "desc") {
-        direction = "asc";
-      }
+      sortedCryptoDataCopy = sortedCryptoDataCopy.sort((a, b) => {
+        const valueA = a[key];
+        const valueB = b[key];
 
-      setSortConfig({ key, direction });
+        if (valueA < valueB) return direction === "asc" ? -1 : 1;
+        if (valueA > valueB) return direction === "asc" ? 1 : -1;
+        return 0;
+      });
     }
+
+    setCryptoData(sortedCryptoDataCopy);
+    setSortConfig({ key, direction });
   };
 
   const sortedCryptoData = [...cryptoData].sort((a, b) => {
@@ -311,7 +332,10 @@ const AllCoinsTable = () => {
                       alt=""
                       className="w-6 h-6 inline-block mr-2"
                     />
-                    {coin.name}
+                    {coin.name}{" "}
+                    <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+                      {coin.symbol}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -361,21 +385,57 @@ const AllCoinsTable = () => {
             ))}
           </tbody>
         </table>
-        <form onSubmit={(e) => e.preventDefault()} className="max-w-sm mx-auto">
-          <button onClick={() => handlePagination("prev")}>Previous</button>
-          <select
-            onChange={(e) => {
-              setItemsPerPage(parseInt(e.target.value));
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="items-center justify-center h-full space-x-5 my-5 mx-auto inline-flex  w-full"
+        >
+          <button
+            disabled={page === 1}
+            className="h-full text-zinc-800 bg-zinc-100 disabled:border-none disabled:opacity-50 border border-[#ccc] dark:bg-zinc-800  dark:text-zinc-100"
+            onClick={() => handlePagination("prev")}
+          >
+            <FaArrowLeft />
+          </button>
+          <input
+            min={1}
+            // type="number"
+            value={page}
+            defaultValue={page}
+            onChange={(e) => setPage(e.target.value)}
+            className="w-10 p-1 py-2 outline-none h-full bg-zinc-100 border hover:border-[#646cff] active:border-[#646cff] border-[#ccc] dark:bg-zinc-800 rounded-lg text-center dark:text-zinc-100"
+          />
+          <Select
+            isSearchable={false}
+            defaultValue={itemsPerPage}
+            classNames={{
+              menu: () =>
+                "bg-zinc-100 dark:bg-zinc-800  !rounded-lg overflow-hidden",
+              option: () => " bg-zinc-100 dark:bg-zinc-800 hover:!bg-zinc-500",
+              menuPortal: () => "z-40  ",
+              selectedOption: () => "bg-red-500",
+              singleValue: () => "dark:text-zinc-100 text-zinc-800 ",
+              control: () =>
+                " dark:!bg-zinc-800 !bg-zinc-100 !rounded-lg !h-full !cursor-pointer hover:!border hover:!border-[#646cff] ",
+              placeholder: () => " bg-zinc-100  dark:text-zinc-100",
+            }}
+            options={[
+              { value: 50, label: "50 per page" },
+              { value: 100, label: "100 per page" },
+              { value: 250, label: "250 per page" },
+            ]}
+            value={{ value: itemsPerPage, label: `${itemsPerPage} per page` }}
+            onChange={(selectedOption) => {
+              setItemsPerPage(selectedOption.value);
               setPage(1); // Reset page to 1 when changing items per page
             }}
-            value={itemsPerPage}
-            className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="border-none outline-none rounded-lg color-black"
+          />
+          <button
+            className="h-full text-zinc-800 bg-zinc-100 border border-[#ccc] dark:bg-zinc-800 dark:text-zinc-100"
+            onClick={() => handlePagination("next")}
           >
-            <option value={50}>50 per page</option>
-            <option value={100}>100 per page</option>
-            <option value={250}>250 per page</option>
-          </select>
-          <button onClick={() => handlePagination("next")}>Next</button>{" "}
+            <FaArrowRight />
+          </button>{" "}
         </form>
       </div>
     </div>

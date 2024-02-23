@@ -63,44 +63,60 @@ const CryptoTop100Table = () => {
     };
   }, []);
 
-  const sortedCryptoData = useMemo(() => {
-    const sortedData = [...cryptoData].sort((a, b) => {
-      if (sortConfig.key) {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === "asc" ? -1 : 1;
-        }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === "asc" ? 1 : -1;
-        }
-      }
-      return 0;
-    });
-    return sortedData;
-  }, [cryptoData, sortConfig]);
+  const sortedCryptoData = [...cryptoData].sort((a, b) => {
+    if (sortConfig.direction === "desc") {
+      return a[sortConfig.key] > b[sortConfig.key] ? -1 : 1;
+    }
+    if (sortConfig.direction === "asc") {
+      return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
+    }
+    return 0;
+  });
 
   const handleSort = (key) => {
-    if (key === "favorite") {
-      const sortedCryptoDataCopy = [...cryptoData].sort((a, b) => {
-        const directionFactor = sortConfig.direction === "asc" ? 1 : -1;
-        return (
-          directionFactor *
-          (favorites.includes(a.symbol) - favorites.includes(b.symbol))
-        );
-      });
-      setCryptoData(sortedCryptoDataCopy);
-    } else {
-      // Create a copy of sortConfig to avoid directly modifying the state
-      const newSortConfig = { ...sortConfig };
-      if (newSortConfig.key === key && newSortConfig.direction === "desc") {
-        newSortConfig.direction = "asc";
-      } else {
-        newSortConfig.key = key;
-        newSortConfig.direction = "desc";
-      }
-      setSortConfig(newSortConfig);
-    }
-  };
+    let direction = "desc";
 
+    if (sortConfig.key === key) {
+      direction = sortConfig.direction === "desc" ? "asc" : "desc";
+    }
+
+    let sortedCryptoDataCopy = [...cryptoData];
+
+    if (key === "favorite") {
+      sortedCryptoDataCopy = sortedCryptoDataCopy.sort((a, b) => {
+        const isAFavorite = favorites.includes(a.id);
+        const isBFavorite = favorites.includes(b.id);
+
+        if (isAFavorite && !isBFavorite) return -1;
+        if (!isAFavorite && isBFavorite) return 1;
+
+        // If both are favorites or both are not favorites, compare their positions
+        if (isAFavorite && isBFavorite) {
+          // When sorting in descending order, prioritize the favorite IDs first
+          if (sortConfig.direction === "desc") {
+            return favorites.indexOf(a.id) - favorites.indexOf(b.id);
+          } else {
+            // When sorting in ascending order, prioritize the favorite IDs last
+            return favorites.indexOf(b.id) - favorites.indexOf(a.id);
+          }
+        }
+
+        return 0;
+      });
+    } else {
+      sortedCryptoDataCopy = sortedCryptoDataCopy.sort((a, b) => {
+        const valueA = a[key];
+        const valueB = b[key];
+
+        if (valueA < valueB) return direction === "asc" ? -1 : 1;
+        if (valueA > valueB) return direction === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
+
+    setCryptoData(sortedCryptoDataCopy);
+    setSortConfig({ key, direction });
+  };
   const filteredCryptoData = sortedCryptoData.filter(
     (crypto) =>
       crypto.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

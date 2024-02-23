@@ -153,7 +153,7 @@ const CryptoSearch = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
+              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
             >
               <ul>
                 {filteredResults.coins.map((coin) => (
@@ -169,7 +169,10 @@ const CryptoSearch = () => {
                       alt=""
                       className="w-6 h-6 inline-block mr-2"
                     />
-                    {coin.name}
+                    {coin.name}{" "}
+                    <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
+                      {coin.symbol}
+                    </span>
                   </li>
                 ))}
               </ul>
