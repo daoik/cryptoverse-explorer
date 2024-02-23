@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { FaSun, FaMoon } from "react-icons/fa";
 import { motion, useCycle } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -22,36 +21,6 @@ const SideNavbar = () => {
     toggleOpen();
   };
 
-  const Navigation = () => {
-    const variants = (i) => ({
-      open: { opacity: 1, x: 0, transition: { delay: 0.1 + i * 0.1 } },
-      closed: { opacity: 0, x: "-200%", transition: { delay: 0.1 + i * 0.1 } },
-    });
-    return (
-      <motion.ul
-        variants={{
-          open: { opacity: 1, x: 0 },
-          closed: { opacity: 0, x: "-100%" },
-        }}
-      >
-        {[
-          { label: "Home", link: "/" },
-          { label: "Top 100", link: "/top100" },
-          { label: "All Coins", link: "/coins/all" },
-          { label: "Favs", link: "/" },
-        ].map(({ label, link }, i) => (
-          <motion.li key={i} variants={variants(i)}>
-            <MenuItem
-              i={i}
-              label={label}
-              link={link}
-              toggleNavbar={toggleNavbar}
-            />
-          </motion.li>
-        ))}
-      </motion.ul>
-    );
-  };
   const MenuToggle = ({ toggle }) => {
     const Path = (props) => (
       <motion.path
@@ -162,6 +131,10 @@ const SideNavbar = () => {
       },
     },
   };
+  const variants = (i) => ({
+    open: { opacity: 1, x: 0, transition: { delay: 0.1 + i * 0.1 } },
+    closed: { opacity: 0, x: "-100%", transition: { delay: 0.1 + i * 0.1 } },
+  });
   return (
     <motion.nav
       className={`${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
@@ -183,8 +156,28 @@ const SideNavbar = () => {
               {darkMode ? <GoSun size={23} /> : <GoMoon size={23} />}
             </button>
           </div>
-
-          <Navigation />
+          <motion.ul
+            variants={{
+              open: { opacity: 1, x: 0 },
+              closed: { opacity: 0, x: "-100%" },
+            }}
+          >
+            {[
+              { label: "Home", link: "/" },
+              { label: "Top 100", link: "/top100" },
+              { label: "All Coins", link: "/coins/all" },
+              { label: "Favs", link: "/" },
+            ].map(({ label, link }, i) => (
+              <motion.li key={i} variants={variants(i)}>
+                <MenuItem
+                  i={i}
+                  label={label}
+                  link={link}
+                  toggleNavbar={toggleNavbar}
+                />
+              </motion.li>
+            ))}
+          </motion.ul>
         </div>
       </motion.div>
     </motion.nav>

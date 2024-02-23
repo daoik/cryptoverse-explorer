@@ -144,7 +144,7 @@ const CryptoDetails = ({ id }) => {
                 24h Volume <InfoTooltipIcon content={tooltipData.vol} />
               </div>
               <div className="value tracking-wide font-semibold">
-                ${addCommasToNumber(coin?.market_data?.total_volume.usd)}
+                ${addCommasToNumber(coin?.market_data?.total_volume?.usd)}
               </div>
             </div>
             <div className="circ inline-flex w-full justify-between">
@@ -154,7 +154,7 @@ const CryptoDetails = ({ id }) => {
               </div>
               <div className="value tracking-wide font-semibold">
                 {addCommasToNumber(
-                  coin?.market_data?.circulating_supply.toFixed(0)
+                  coin?.market_data?.circulating_supply?.toFixed(0)
                 )}
               </div>
             </div>
@@ -164,7 +164,7 @@ const CryptoDetails = ({ id }) => {
               </div>
               <div className="value tracking-wide font-semibold">
                 {coin?.market_data?.max_suuply
-                  ? addCommasToNumber(coin?.market_data?.max_suuply.toFixed(0))
+                  ? addCommasToNumber(coin?.market_data?.max_supply?.toFixed(0))
                   : "∞"}
               </div>
             </div>

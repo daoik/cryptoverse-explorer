@@ -68,7 +68,7 @@ nav {
   left: 0;
   bottom: 0;
   width: 100vw;
-backdrop-filter: blur(10px);
+backdrop-filter: blur(8px);
 
   
 }
