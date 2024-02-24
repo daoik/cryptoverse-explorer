@@ -12,7 +12,7 @@ const FavoritesPage = () => {
       <div className="text-xl opacity-80 mt-4  inline-flex items-center space-x-5">
         Cryptoverse <AiOutlineCompass className="mx-2" /> Explorer
       </div>
-      <div className="m-10 container text-start">
+      <div className="m-10 moon-bg ] text-start">
         <div className="inline-flex w-full ">
           <div className="favorites w-full items-center  justify-center flex-col">
             <h2 className="text-3xl font-semibold text-center mb-4">
@@ -23,11 +23,11 @@ const FavoritesPage = () => {
                 (coin) => coin !== null && <CardCoin coin={coin} key={coin} />
               )}
             </div>
-            <img
+            {/* <img
               src={moon}
               alt="moon"
-              className="w-100vw opacity-20 scale-150 object-contain overflow-visible"
-            />
+              className="w-[100vw] h-[100vh] absolute -bottom-[300px] border border-red-500 sopacity-20 scale-150 object-contain"
+            /> */}
           </div>
         </div>
       </div>

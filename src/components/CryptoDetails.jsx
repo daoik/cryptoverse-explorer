@@ -58,7 +58,7 @@ const CryptoDetails = ({ id }) => {
 
   const widthClass = `w-[${percentageDifference}%]`;
 
-  return (
+  return coin ? (
     <div className="flex flex-col ">
       <div className="flex flex-col lg:!flex-row">
         <div className=" xs:w-full flex flex-col flex-1  p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
@@ -116,7 +116,7 @@ const CryptoDetails = ({ id }) => {
             </div>
           </div>
           <div className="values space-y-3 mt-3">
-            <div className="market-cap inline-flex w-full justify-between me-3">
+            <div className="market-cap inline-flex w-full justify-between md:me-3">
               <div className="label inline-flex">
                 Market Cap
                 <InfoTooltipIcon content={tooltipData.market_cap} />
@@ -125,9 +125,9 @@ const CryptoDetails = ({ id }) => {
                 ${addCommasToNumber(coin?.market_data?.market_cap.usd)}
               </div>
             </div>
-            <div className="fdv inline-flex w-full justify-between me-3">
+            <div className="fdv inline-flex w-full justify-between md:me-3">
               <div className="label  inline-flex">
-                <div className="whitespace-nowrap">
+                <div className="md:whitespace-nowrap">
                   {" "}
                   Fully Diluted Valuation{" "}
                 </div>
@@ -140,7 +140,7 @@ const CryptoDetails = ({ id }) => {
                 )}
               </div>
             </div>
-            <div className="volume inline-flex w-full justify-between me-3">
+            <div className="volume inline-flex w-full justify-between md:me-3">
               <div className="label inline-flex">
                 24h Volume <InfoTooltipIcon content={tooltipData.vol} />
               </div>
@@ -148,7 +148,7 @@ const CryptoDetails = ({ id }) => {
                 ${addCommasToNumber(coin?.market_data?.total_volume?.usd)}
               </div>
             </div>
-            <div className="circ inline-flex w-full justify-between me-3">
+            <div className="circ inline-flex w-full justify-between md:me-3">
               <div className="label inline-flex">
                 Circulating Supply{" "}
                 <InfoTooltipIcon content={tooltipData.circ} />
@@ -159,7 +159,7 @@ const CryptoDetails = ({ id }) => {
                 )}
               </div>
             </div>
-            <div className="max inline-flex w-full justify-between me-3">
+            <div className="max inline-flex w-full justify-between md:me-3">
               <div className="label inline-flex">
                 Max Supply <InfoTooltipIcon content={tooltipData.max} />
               </div>
@@ -171,12 +171,12 @@ const CryptoDetails = ({ id }) => {
             </div>
           </div>
         </div>
-        <div className="shadow m-1.5  w-full rounded-lg bg-zinc-100 dark:bg-zinc-900 ">
+        <div className="shadow m-1.5  w-full h-96 lg:h-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 ">
           <ReCharts id={id} />
         </div>
       </div>
       <div className="flex flex-col lg:!flex-row">
-        <div className="w-96 flex flex-col p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
+        <div className="md:w-96 flex flex-col p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
           <h5 className="font-bold mb-3"> Info </h5>
           <div className="website inline-flex w-full justify-between mb-2">
             <div className="label inline-flex">Website</div>
@@ -266,7 +266,7 @@ const CryptoDetails = ({ id }) => {
           </div>
         </div>
 
-        <div className="w-full p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
+        <div className="md:w-full p-5 m-1.5 rounded-lg shadow bg-zinc-100 dark:bg-zinc-900">
           <h5 className="font-bold mb-3"> Description </h5>
           {coin?.description?.en && coin.description.en.length > 0 ? (
             <div dangerouslySetInnerHTML={{ __html: coin.description.en }} />
@@ -276,6 +276,8 @@ const CryptoDetails = ({ id }) => {
         </div>
       </div>
     </div>
+  ) : (
+    "Loading..."
   );
 };
 

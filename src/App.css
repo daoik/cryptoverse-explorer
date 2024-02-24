@@ -1,3 +1,4 @@
+
 #root {
   /* max-width: 1280px; */
   margin: 0 auto;
@@ -37,6 +38,10 @@
 .card {
   padding: 2em;
 }
+/* 
+.moon-bg{
+  background-image: url('../src/assets/moon.png');
+} */
 
 .read-the-docs {
   color: #888;

@@ -19,7 +19,7 @@ const CryptoTop100Table = () => {
   const [cryptoData, setCryptoData] = useState([]);
 
   const [sortConfig, setSortConfig] = useState({
-    key: null,
+    key: "market_cap",
     direction: "desc",
   });
   const [searchQuery, setSearchQuery] = useState("");

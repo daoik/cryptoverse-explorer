@@ -23,7 +23,7 @@ const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 const AllCoinsTable = () => {
   const [cryptoData, setCryptoData] = useState([]);
   const [sortConfig, setSortConfig] = useState({
-    key: null,
+    key: "market_cap",
     direction: "desc",
   });
 

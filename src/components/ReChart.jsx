@@ -62,8 +62,8 @@ const ReChart = ({ id }) => {
     <div className="chart h-full w-full p-3 ">
       <ResponsiveContainer width="99%">
         <LineChart
-          height={400}
-          width={600}
+          // height={400}
+          // width={600}
           data={historicalData}
           margin={{
             top: 15,
