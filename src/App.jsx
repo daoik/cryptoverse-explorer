@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense } from "react";
-import "./index.css";
-import "./tailwind.css";
+// import "./index.css";
+// import "./tailwind.css";
 import "./bg.css";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
