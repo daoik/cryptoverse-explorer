@@ -7,10 +7,9 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceArea,
   ResponsiveContainer,
 } from "recharts";
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
+import { fetchHistoricalData } from "./api";
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const date = new Date(label);
@@ -30,22 +29,9 @@ const ReChart = ({ id }) => {
   const [historicalData, setHistoricalData] = useState([]);
 
   useEffect(() => {
-    const fetchHistoricalData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/` +
-            id +
-            `/market_chart?vs_currency=usd&days=1?x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
-        setHistoricalData(
-          data.prices.map(([time, price]) => ({ time, price }))
-        );
-      } catch (error) {
-        console.error("Error fetching historical data:", error);
-      }
-    };
-    fetchHistoricalData();
+    fetchHistoricalData(id)
+      .then(setHistoricalData)
+      .catch((error) => console.error("Error fetching crypto data:", error));
   }, [id]);
 
   const formatXAxis = (tickItem) => {

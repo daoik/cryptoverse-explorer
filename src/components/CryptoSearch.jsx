@@ -4,8 +4,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "./Tooltip";
 import { debounce } from "lodash"; // Import debounce utility
-
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
+import { searchCoins } from "./api";
 
 const CryptoSearch = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -30,10 +29,7 @@ const CryptoSearch = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/search?query=${searchQuery}&x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
+        const data = await searchCoins(searchQuery);
         setFilteredResults(data);
       } catch (error) {
         console.error("Error fetching data:", error);

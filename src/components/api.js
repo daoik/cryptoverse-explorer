@@ -58,5 +58,17 @@ export const fetchTop100 = async () => {
     console.error("Error fetching data:", error);
   }
 };
-
+export const fetchHistoricalData = async (coin) => {
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/` +
+        coin +
+        `/market_chart?vs_currency=usd&days=1?x_cg_demo_api_key=${APIKEY}`
+    );
+    const data = await response.json();
+    return data.prices.map(([time, price]) => ({ time, price }));
+  } catch (error) {
+    console.error("Error fetching historical data:", error);
+  }
+};
 export default api;
