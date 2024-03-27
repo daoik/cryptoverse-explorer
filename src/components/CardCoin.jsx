@@ -5,6 +5,7 @@ const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import { useNavigate } from "react-router-dom";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { fetchCoinData } from "./api";
 
 const CardCoin = ({ coin }) => {
   const [coinData, setCoinData] = useState({});
@@ -13,19 +14,9 @@ const CardCoin = ({ coin }) => {
     navigate(`/cryptoverse-explorer/coins/${coinData.id}`);
   };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${coin}?sparkline=false?x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
-        setCoinData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    fetchCoinData(coin)
+      .then(setCoinData)
+      .catch((error) => console.error("Error fetching crypto data:", error));
   }, [coin]);
 
   return (

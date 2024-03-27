@@ -18,7 +18,6 @@ import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
 import Select from "react-select";
 import { fetchCryptoData, searchCoins } from "./api";
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
 const AllCoinsTable = () => {
   const [cryptoData, setCryptoData] = useState([]);

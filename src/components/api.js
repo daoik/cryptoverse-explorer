@@ -35,4 +35,16 @@ export const searchCoins = async (searchQuery) => {
   }
 };
 
+export const fetchCoinData = async (coin) => {
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coin}?sparkline=false?x_cg_demo_api_key=${APIKEY}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 export default api;
