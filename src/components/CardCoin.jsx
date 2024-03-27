@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import FavoriteButton from "./FavoriteButton";
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import { useNavigate } from "react-router-dom";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";

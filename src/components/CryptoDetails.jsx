@@ -6,8 +6,7 @@ import tooltipData from "./tooltipData.json";
 import Tooltip from "./Tooltip";
 import InfoTooltipIcon from "./InfoTooltipIcon";
 import FavoriteButton from "./FavoriteButton";
-
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
+import { fetchCoinData } from "./api";
 
 function calculatePercentageFull(currentPrice, lowestPrice, highestPrice) {
   let priceRange = highestPrice - lowestPrice;
@@ -32,18 +31,9 @@ const CryptoDetails = ({ id }) => {
   const [percentageDifference, setPercentageDifference] = useState(0);
 
   useEffect(() => {
-    const fetchCoinData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${id}/?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false?x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
-        setCoin(data);
-      } catch (error) {
-        console.error("Error fetching historical data:", error);
-      }
-    };
-    fetchCoinData();
+    fetchCoinData(id)
+      .then(setCoin)
+      .catch((error) => console.error("Error fetching crypto data:", error));
   }, [id]);
 
   useEffect(() => {
