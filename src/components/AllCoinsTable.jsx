@@ -17,7 +17,7 @@ import { debounce } from "lodash";
 import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
 import Select from "react-select";
-
+import { fetchCryptoData, searchCoins } from "./api";
 const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 
 const AllCoinsTable = () => {
@@ -40,45 +40,16 @@ const AllCoinsTable = () => {
   const handleRowClick = (crypto) => {
     navigate(`/cryptoverse-explorer/coins/${crypto.id}`);
   };
-
   useEffect(() => {
-    const fetchCryptoData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${itemsPerPage}&page=${page}&sparkline=false&x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
-        setCryptoData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchCryptoData();
-
-    const handleSlashKeyDown = (e) => {
-      if (e.key === "/") {
-        inputRef.current.focus();
-        e.preventDefault();
-      } else if (e.key === "Escape") {
-        inputRef.current.blur();
-      }
-    };
-
-    document.addEventListener("keydown", handleSlashKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleSlashKeyDown);
-    };
+    fetchCryptoData(itemsPerPage, page)
+      .then(setCryptoData)
+      .catch((error) => console.error("Error fetching crypto data:", error));
   }, [page, itemsPerPage]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/search?query=${searchQuery}&x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
+        const data = await searchCoins(searchQuery);
         setFilteredResults(data);
       } catch (error) {
         console.error("Error fetching data:", error);
