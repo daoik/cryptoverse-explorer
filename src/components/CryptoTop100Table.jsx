@@ -12,8 +12,7 @@ import Tooltip from "./Tooltip";
 import { useNavigate } from "react-router-dom";
 import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
-
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
+import { fetchTop100 } from "./api";
 
 const CryptoTop100Table = () => {
   const [cryptoData, setCryptoData] = useState([]);
@@ -33,19 +32,9 @@ const CryptoTop100Table = () => {
   };
 
   useEffect(() => {
-    const fetchCryptoData = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false?x_cg_demo_api_key=${APIKEY}`
-        );
-        const data = await response.json();
-        setCryptoData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchCryptoData();
+    fetchTop100()
+      .then(setCryptoData)
+      .catch((error) => console.error("Error fetching crypto data:", error));
 
     const handleSlashKeyDown = (e) => {
       if (e.key === "/") {
