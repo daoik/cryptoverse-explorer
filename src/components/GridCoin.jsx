@@ -22,7 +22,7 @@ const CardCoin = ({ coin }) => {
     coinData && (
       <div
         onClick={handeCardClick}
-        className="p-3 w-72 h-40  m-3 self-center  transition-all  cursor-pointer hover:outline outline-2 outline-purple-900 hover:bg-zinc-100 rounded-lg shadow-md bg-zinc-200 dark:bg-gray-600 dark:hover:bg-zinc-800 flex flex-col"
+        className="p-3 w-72 h-40  m-3 self-center  transition-all  cursor-pointer hover:outline outline-2 outline-purple-900 hover:bg-zinc-100 rounded-lg shadow-md bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-gray-600 flex flex-col"
       >
         {" "}
         <div className="h-1/3 flex items-center">
