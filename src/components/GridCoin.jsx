@@ -26,12 +26,12 @@ const CardCoin = ({ coin }) => {
       >
         {" "}
         <div className="h-1/3 flex items-center">
-          <h3 className="text-xl  inline-flex  w-full justify-between items-center font-semibold mb-4 text-orange-700 dark:text-orange-300">
+          <h3 className="text-xl  inline-flex  w-full justify-center items-center font-semibold mb-4 text-orange-700 dark:text-orange-300">
             <img className="h-6 pe-2" src={coinData.image} /> {coinData.name}{" "}
             <span className="inline-block text-gray-700 dark:text-gray-300 px-2 py-1 text-xs font-semibold uppercase">
               {coinData.symbol}
             </span>
-            <FavoriteButton className="px-2" id={coinData.id} />
+            <FavoriteButton className="px-2 ml-auto" id={coinData.id} />
           </h3>
         </div>
         <div className="inline-flex mt-auto">
