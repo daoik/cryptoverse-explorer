@@ -13,10 +13,12 @@ import { useNavigate } from "react-router-dom";
 import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
 import { fetchTop100 } from "./api";
-
+import useGridViewStore from "../store/gridViewStore";
+import Card from "./Card";
+import GridCoin from "./GridCoin";
 const CryptoTop100Table = () => {
   const [cryptoData, setCryptoData] = useState([]);
-
+  const gridView = useGridViewStore((state) => state.gridView);
   const [sortConfig, setSortConfig] = useState({
     key: "market_cap",
     direction: "desc",
@@ -259,46 +261,58 @@ const CryptoTop100Table = () => {
           </div>
         </form>
       </div>
-      <div className="w-full overflow-x-auto">
-        <table
-          className="table-auto w-full rounded-lg overflow-hidden "
-          // style={{ tableLayout: "fixed" }}
-        >
-          <thead className="bg-zinc-300 dark:bg-zinc-900 whitespace-nowrap w-full ">
-            <tr>
-              <TableHeaderCell
-                className="w-10 text-end"
-                label="#"
-                sortKey="market_cap_rank"
-              />
-              <TableHeaderCell
-                className="!text-start"
-                label="Name"
-                sortKey="name"
-              />
-              <TableHeaderCell
-                label="Current Price (USD)"
-                sortKey="current_price"
-              />
-              <TableHeaderCell label="Market Cap (USD)" sortKey="market_cap" />
-              <TableHeaderCell
-                label="24h Change (%)"
-                sortKey="price_change_percentage_24h"
-              />
-              <TableHeaderCell
-                className="text-end "
-                label=""
-                sortKey="favorite"
-              />
-            </tr>
-          </thead>
-          <tbody>
-            {filteredCryptoData.map((crypto, index) => (
-              <CryptoRow key={crypto.id} crypto={crypto} index={index} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {gridView ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {" "}
+          {filteredCryptoData.map((crypto, index) => (
+            <GridCoin key={crypto.id} coin={crypto} />
+          ))}
+        </div>
+      ) : (
+        <div className="w-full overflow-x-auto">
+          <table
+            className="table-auto w-full rounded-lg overflow-hidden "
+            // style={{ tableLayout: "fixed" }}
+          >
+            <thead className="bg-zinc-300 dark:bg-zinc-900 whitespace-nowrap w-full ">
+              <tr>
+                <TableHeaderCell
+                  className="w-10 text-end"
+                  label="#"
+                  sortKey="market_cap_rank"
+                />
+                <TableHeaderCell
+                  className="!text-start"
+                  label="Name"
+                  sortKey="name"
+                />
+                <TableHeaderCell
+                  label="Current Price (USD)"
+                  sortKey="current_price"
+                />
+                <TableHeaderCell
+                  label="Market Cap (USD)"
+                  sortKey="market_cap"
+                />
+                <TableHeaderCell
+                  label="24h Change (%)"
+                  sortKey="price_change_percentage_24h"
+                />
+                <TableHeaderCell
+                  className="text-end "
+                  label=""
+                  sortKey="favorite"
+                />
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCryptoData.map((crypto, index) => (
+                <CryptoRow key={crypto.id} crypto={crypto} index={index} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
