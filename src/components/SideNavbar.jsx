@@ -12,6 +12,7 @@ import {
 import useDarkModeStore from "../store/darkModeStore";
 import "../App.css";
 import { AiOutlineCompass } from "react-icons/ai";
+import { IoEarthOutline } from "react-icons/io5";
 
 const SideNavbar = () => {
   const { darkMode, toggleDarkMode } = useDarkModeStore();
@@ -82,7 +83,7 @@ const SideNavbar = () => {
             style={style}
           >
             {label === "Home" ? (
-              <GoHome
+              <IoEarthOutline
                 className="transition-all group-hover:scale-125"
                 size={20}
               />
