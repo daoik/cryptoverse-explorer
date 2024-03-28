@@ -2,11 +2,9 @@ import React from "react";
 import { AiOutlineCompass } from "react-icons/ai";
 import AllCoinsTable from "../components/AllCoinsTable";
 import BackToTopButton from "../components/BackToTopButton";
-import Toggle from "../components/Toggle";
-import useGridViewStore from "../store/gridViewStore";
+import GridViewToggle from "../components/GridViewToggle";
 
 function AllCoinsPage() {
-  const { gridView, toggleGridView } = useGridViewStore();
   return (
     <div className="transition-all duration-50 flex-grow bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-neutral-200  w-full">
       <div className="w-full flex justify-between">
@@ -16,7 +14,7 @@ function AllCoinsPage() {
           Cryptoverse <AiOutlineCompass className="mx-2" /> Explorer
         </div>
         <div className="w-32">
-          <Toggle on={gridView} setOn={toggleGridView} />
+          <GridViewToggle />
         </div>
       </div>
       <div className="mx-auto mb-24">
