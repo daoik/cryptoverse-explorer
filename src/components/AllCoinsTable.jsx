@@ -18,6 +18,8 @@ import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
 import Select from "react-select";
 import { fetchCryptoData, searchCoins } from "./api";
+import useGridViewStore from "../store/gridViewStore";
+import GridCoin from "./GridCoin";
 
 const AllCoinsTable = () => {
   const [cryptoData, setCryptoData] = useState([]);
@@ -33,9 +35,10 @@ const AllCoinsTable = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showClearButton, setShowClearButton] = useState(false);
   const inputRef = useRef(null);
-  const favorites = useFavoriteStore((state) => state.favorites);
-
   const navigate = useNavigate();
+  const favorites = useFavoriteStore((state) => state.favorites);
+  const gridView = useGridViewStore((state) => state.gridView);
+
   const handleRowClick = (crypto) => {
     navigate(`/cryptoverse-explorer/coins/${crypto.id}`);
   };
@@ -67,6 +70,23 @@ const AllCoinsTable = () => {
     };
   }, [searchQuery]);
 
+  useEffect(() => {
+    const handleSlashKeyDown = (e) => {
+      if (e.key === "/") {
+        inputRef.current.focus();
+        e.preventDefault();
+      } else if (e.key === "Escape") {
+        inputRef.current.blur();
+      }
+    };
+
+    document.addEventListener("keydown", handleSlashKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleSlashKeyDown);
+    };
+  }, []);
+
   const handleClear = () => {
     setSearchQuery("");
     setShowClearButton(false);
@@ -79,6 +99,7 @@ const AllCoinsTable = () => {
       e.preventDefault();
     }
   };
+
   const handleSort = (key) => {
     let direction = "desc";
 
@@ -168,7 +189,7 @@ const AllCoinsTable = () => {
       } cursor-pointer hover:bg-zinc-400 dark:hover:bg-zinc-500 transition-colors whitespace-nowrap `}
       onClick={() => handleRowClick(crypto)}
     >
-      <td className="px-4 py-2 ">{crypto.market_cap_rank}</td>
+      <td className="px-4 py-2">{crypto.market_cap_rank}</td>
 
       <td className="px-4 py-2">
         <div className="flex items-center">
@@ -187,9 +208,6 @@ const AllCoinsTable = () => {
       <td className="px-4 py-2 text-end">
         ${addCommasToNumber(crypto.current_price)}
       </td>
-      <td className="px-4 py-2 text-end">
-        ${addCommasToNumber(crypto.market_cap)}
-      </td>
       <td
         className={`px-4 py-2 text-end ${
           crypto.price_change_percentage_24h >= 0
@@ -202,8 +220,18 @@ const AllCoinsTable = () => {
         ) : (
           <FaChevronDown className="p-0.5 pe-1 inline-flex" />
         )}
-        {crypto.price_change_percentage_24h}%
+        {crypto.price_change_percentage_24h.toFixed(2)}%
       </td>
+      <td className="px-4 py-2 text-end">
+        ${addCommasToNumber(crypto.market_cap)}
+      </td>
+      <td className="px-4 py-2 text-end">
+        ${addCommasToNumber(crypto.low_24h)}
+      </td>
+      <td className="px-4 py-2 text-end">
+        ${addCommasToNumber(crypto.high_24h)}
+      </td>
+
       <td>
         {" "}
         <FavoriteButton id={crypto.id} />
@@ -285,7 +313,7 @@ const AllCoinsTable = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2 }}
-              className="mt-1.5 dark:bg-zinc-800 bg-zinc-200 text-start rounded-md overflow-auto overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
+              className="mt-1.5 dark:bg-zinc-800 z-10 bg-zinc-200 text-start rounded-md overflow-auto overflow-x-hidden absolute max-h-64 w-full scroll shadow-lg"
             >
               <ul>
                 {filteredResults.coins.map((coin) => (
@@ -312,101 +340,117 @@ const AllCoinsTable = () => {
           )}
         </form>{" "}
       </div>
-      <div className="">
-        <table className="table-auto w-full rounded-lg overflow-hidden">
-          <thead className="bg-zinc-300 dark:bg-zinc-900  w-full ">
-            <tr>
-              <TableHeaderCell
-                className="w-10 text-end "
-                label="#"
-                sortKey="market_cap_rank"
-              />
-              <TableHeaderCell
-                className="text-start "
-                label="Name"
-                sortKey="name"
-              />
-              <TableHeaderCell
-                className="text-end "
-                label="Current Price (USD)"
-                sortKey="current_price"
-              />
-              <TableHeaderCell
-                className="text-end "
-                label="Market Cap (USD)"
-                sortKey="market_cap"
-              />
-              <TableHeaderCell
-                className="text-end "
-                label="24h Change (%)"
-                sortKey="price_change_percentage_24h"
-              />
-              <TableHeaderCell
-                className="text-end "
-                label=""
-                sortKey="favorite"
-              />
-            </tr>
-          </thead>
-          <tbody>
-            {sortedCryptoData.map((crypto, index) => (
-              <CryptoRow key={crypto.id} crypto={crypto} index={index} />
-            ))}
-          </tbody>
-        </table>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="items-center justify-center h-full space-x-5 my-5 mx-auto inline-flex  w-full"
+      {gridView ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+          {" "}
+          {sortedCryptoData.map((crypto, index) => (
+            <GridCoin key={crypto.id} coin={crypto} />
+          ))}
+        </div>
+      ) : (
+        <div className="">
+          <table className="table-auto w-full rounded-lg overflow-hidden">
+            <thead className="bg-zinc-300 dark:bg-zinc-900  w-full ">
+              <tr>
+                <TableHeaderCell
+                  className="w-10 text-end"
+                  label="#"
+                  sortKey="market_cap_rank"
+                />
+                <TableHeaderCell
+                  className="!text-start"
+                  label="Name"
+                  sortKey="name"
+                />
+                <TableHeaderCell
+                  label="Current Price (USD)"
+                  sortKey="current_price"
+                />
+                <TableHeaderCell
+                  label="24h Change (%)"
+                  sortKey="price_change_percentage_24h"
+                />
+                <TableHeaderCell
+                  label="Market Cap (USD)"
+                  sortKey="market_cap"
+                />
+
+                <TableHeaderCell
+                  label="24h Low"
+                  sortKey="price_change_percentage_24h"
+                />
+                <TableHeaderCell
+                  label="24h High"
+                  sortKey="price_change_percentage_24h"
+                />
+
+                <TableHeaderCell
+                  className="text-end "
+                  label=""
+                  sortKey="favorite"
+                />
+              </tr>
+            </thead>
+            <tbody>
+              {sortedCryptoData.map((crypto, index) => (
+                <CryptoRow key={crypto.id} crypto={crypto} index={index} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}{" "}
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="items-center justify-center h-full space-x-5 my-5 mx-auto inline-flex  w-full"
+      >
+        <button
+          disabled={page === 1}
+          className="h-full text-zinc-800 bg-zinc-100 disabled:border-none disabled:opacity-50 border border-[#ccc] dark:bg-zinc-800  dark:text-zinc-100"
+          onClick={() => handlePagination("prev")}
         >
-          <button
-            disabled={page === 1}
-            className="h-full text-zinc-800 bg-zinc-100 disabled:border-none disabled:opacity-50 border border-[#ccc] dark:bg-zinc-800  dark:text-zinc-100"
-            onClick={() => handlePagination("prev")}
-          >
-            <FaArrowLeft />
-          </button>
-          <input
-            min={1}
-            // type="number"
-            value={page}
-            // defaultValue={page}
-            onChange={(e) => setPage(e.target.value)}
-            className="w-10 p-1 py-2 outline-none h-full bg-zinc-100 border hover:border-[#646cff] active:border-[#646cff] border-[#ccc] dark:bg-zinc-800 rounded-lg text-center dark:text-zinc-100"
-          />
-          <Select
-            isSearchable={false}
-            defaultValue={itemsPerPage}
-            classNames={{
-              menu: () =>
-                "bg-zinc-100 dark:bg-zinc-800  !rounded-lg overflow-hidden",
-              option: () => " bg-zinc-100 dark:bg-zinc-800 hover:!bg-zinc-500",
-              menuPortal: () => "z-40  ",
-              selectedOption: () => "bg-red-500",
-              singleValue: () => "dark:text-zinc-100 text-zinc-800 ",
-              control: () =>
-                " dark:!bg-zinc-800 !bg-zinc-100 !rounded-lg !h-full !cursor-pointer hover:!border hover:!border-[#646cff] ",
-              placeholder: () => " bg-zinc-100  dark:text-zinc-100",
-            }}
-            options={[
-              { value: 50, label: "50 per page" },
-              { value: 100, label: "100 per page" },
-              { value: 250, label: "250 per page" },
-            ]}
-            value={{ value: itemsPerPage, label: `${itemsPerPage} per page` }}
-            onChange={(selectedOption) => {
-              setItemsPerPage(selectedOption.value);
-              setPage(1); // Reset page to 1 when changing items per page
-            }}
-            className="border-none outline-none rounded-lg color-black"
-          />
-          <button
-            className="h-full text-zinc-800 bg-zinc-100 border border-[#ccc] dark:bg-zinc-800 dark:text-zinc-100"
-            onClick={() => handlePagination("next")}
-          >
-            <FaArrowRight />
-          </button>{" "}
-        </form>
-      </div>
+          <FaArrowLeft />
+        </button>
+        <input
+          min={1}
+          // type="number"
+          value={page}
+          // defaultValue={page}
+          onChange={(e) => setPage(e.target.value)}
+          className="w-10 p-1 py-2 outline-none h-full bg-zinc-100 border hover:border-[#646cff] active:border-[#646cff] border-[#ccc] dark:bg-zinc-800 rounded-lg text-center dark:text-zinc-100"
+        />
+        <Select
+          isSearchable={false}
+          defaultValue={itemsPerPage}
+          classNames={{
+            menu: () =>
+              "bg-zinc-100 dark:bg-zinc-800  !rounded-lg overflow-hidden",
+            option: () => " bg-zinc-100 dark:bg-zinc-800 hover:!bg-zinc-500",
+            menuPortal: () => "z-40  ",
+            selectedOption: () => "bg-red-500",
+            singleValue: () => "dark:text-zinc-100 text-zinc-800 ",
+            control: () =>
+              " dark:!bg-zinc-800 !bg-zinc-100 !rounded-lg !h-full !cursor-pointer hover:!border hover:!border-[#646cff] ",
+            placeholder: () => " bg-zinc-100  dark:text-zinc-100",
+          }}
+          options={[
+            { value: 50, label: "50 per page" },
+            { value: 100, label: "100 per page" },
+            { value: 250, label: "250 per page" },
+          ]}
+          value={{ value: itemsPerPage, label: `${itemsPerPage} per page` }}
+          onChange={(selectedOption) => {
+            setItemsPerPage(selectedOption.value);
+            setPage(1); // Reset page to 1 when changing items per page
+          }}
+          className="border-none outline-none rounded-lg color-black"
+        />
+        <button
+          className="h-full text-zinc-800 bg-zinc-100 border border-[#ccc] dark:bg-zinc-800 dark:text-zinc-100"
+          onClick={() => handlePagination("next")}
+        >
+          <FaArrowRight />
+        </button>{" "}
+      </form>
     </div>
   );
 };

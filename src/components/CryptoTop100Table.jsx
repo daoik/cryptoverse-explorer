@@ -14,11 +14,9 @@ import FavoriteButton from "./FavoriteButton";
 import useFavoriteStore from "../store/favoriteStore";
 import { fetchTop100 } from "./api";
 import useGridViewStore from "../store/gridViewStore";
-import Card from "./Card";
 import GridCoin from "./GridCoin";
 const CryptoTop100Table = () => {
   const [cryptoData, setCryptoData] = useState([]);
-  const gridView = useGridViewStore((state) => state.gridView);
   const [sortConfig, setSortConfig] = useState({
     key: "market_cap",
     direction: "desc",
@@ -28,6 +26,7 @@ const CryptoTop100Table = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const favorites = useFavoriteStore((state) => state.favorites);
+  const gridView = useGridViewStore((state) => state.gridView);
 
   const handleRowClick = (crypto) => {
     navigate(`/cryptoverse-explorer/coins/${crypto.id}`);
@@ -108,6 +107,7 @@ const CryptoTop100Table = () => {
     setCryptoData(sortedCryptoDataCopy);
     setSortConfig({ key, direction });
   };
+
   const filteredCryptoData = sortedCryptoData.filter(
     (crypto) =>
       crypto.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
