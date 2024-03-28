@@ -89,10 +89,10 @@ const CryptoDetails = ({ id }) => {
             </div>
           </div>
           <div className="24hbar my-2">
-            <div className="bar w-full h-4  overflow-hidden bg-gray-200 dark:bg-gray-400 rounded-full">
+            <div className="bar w-full h-4  overflow-hidden bg-gray-200 dark:bg-gray-700 rounded-full shadow-inner shadow-gray-300 dark:shadow-gray-800">
               <div
                 style={{ width: `${percentageDifference}%` }}
-                className={`bar-fill bg-gradient-to-r rounded-full from-[#f79d00] to-[#64f38c] h-full  w-[${widthClass}%]`}
+                className={`bar-fill bg-gradient-to-r rounded-full from-[#f79d00] to-[#64f38c] h-full  shadow shadow-gray-300 dark:shadow-gray-800 w-[${widthClass}%]`}
               />
             </div>
             <div className="inline-flex w-full text-sm  justify-between">
