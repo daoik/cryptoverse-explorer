@@ -8,6 +8,7 @@ import InfoTooltipIcon from "./InfoTooltipIcon";
 import FavoriteButton from "./FavoriteButton";
 import { fetchCoinData } from "./api";
 
+import Select from "react-select";
 function calculatePercentageFull(currentPrice, lowestPrice, highestPrice) {
   let priceRange = highestPrice - lowestPrice;
   let priceDifference = currentPrice - lowestPrice;
@@ -29,6 +30,7 @@ const replaceUnnecessary = (str) => {
 const CryptoDetails = ({ id }) => {
   const [coin, setCoin] = useState();
   const [percentageDifference, setPercentageDifference] = useState(0);
+  const [timeframe, setTimeframe] = useState("1");
 
   useEffect(() => {
     fetchCoinData(id)
@@ -161,8 +163,62 @@ const CryptoDetails = ({ id }) => {
             </div>
           </div>
         </div>
+
         <div className="shadow m-1.5  w-full h-96 lg:h-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 ">
-          <ReCharts id={id} />
+          <div className="flex w-full mt-2 -mb-4 items-center justify-end">
+            <div className="text-sm opacity-50">Currency:</div>
+            <Select
+              isSearchable={false}
+              isDisabled={true}
+              classNames={{
+                menu: () =>
+                  "bg-zinc-100 dark:bg-zinc-800  !rounded-lg overflow-hidden",
+                option: () =>
+                  " bg-zinc-100 dark:bg-zinc-800 hover:!bg-zinc-500",
+                menuPortal: () => "z-10  ",
+                selectedOption: () => "bg-red-500",
+                singleValue: () => "dark:text-zinc-100 text-zinc-800 ",
+                control: () =>
+                  " dark:!bg-zinc-800 !bg-zinc-100 !rounded-lg !h-full !cursor-pointer hover:!border hover:!border-[#646cff] ",
+                placeholder: () => " bg-zinc-100  dark:text-zinc-100",
+              }}
+              defaultValue={{ value: "usd", label: "USD" }}
+              className="border-none outline-none scale-75 rounded-lg color-black"
+            />{" "}
+            <div className="text-sm ">Timeframe:</div>
+            <Select
+              isSearchable={false}
+              defaultValue={{ value: 1, label: "24 hours" }}
+              classNames={{
+                menu: () =>
+                  "!bg-zinc-100 dark:!bg-zinc-800  !rounded-lg overflow-hidden",
+                option: () =>
+                  " bg-zinc-100 dark:bg-zinc-800 hover:!bg-zinc-500",
+                menuPortal: () => "!z-50  ",
+
+                singleValue: () => "!dark:text-zinc-100 !text-zinc-800 ",
+                control: () =>
+                  " dark:!bg-zinc-800 !bg-zinc-100 !rounded-lg !h-full !cursor-pointer hover:!border hover:!border-[#646cff] ",
+                placeholder: () => " bg-zinc-100  dark:text-zinc-100",
+              }}
+              options={[
+                { value: 1, label: "24 hours" },
+                { value: 7, label: "Week" },
+                { value: 30, label: "Month" },
+                { value: 60, label: "2 Months" },
+                { value: 100, label: "100 Days" },
+                { value: 200, label: "200 Days" },
+                { value: 365, label: "1 Year" },
+              ]}
+              onChange={(selectedOption) => {
+                setTimeframe(selectedOption.value);
+              }}
+              className="border-none outline-none scale-75 rounded-lg color-black"
+            />
+          </div>
+          <div className=" w-full h-96">
+            <ReCharts id={id} timeframe={timeframe} />
+          </div>
         </div>
       </div>
       <div className="flex flex-col lg:!flex-row">
