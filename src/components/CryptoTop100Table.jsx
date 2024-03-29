@@ -197,7 +197,7 @@ const CryptoTop100Table = () => {
         ) : (
           <FaChevronDown className="p-0.5 pe-1 inline-flex" />
         )}
-        {crypto.price_change_percentage_24h.toFixed(2)}%
+        {crypto.price_change_percentage_24h?.toFixed(2)}%
       </td>
       <td className="px-4 py-2 text-end">
         ${addCommasToNumber(crypto.market_cap)}
@@ -306,14 +306,8 @@ const CryptoTop100Table = () => {
                   sortKey="market_cap"
                 />
 
-                <TableHeaderCell
-                  label="24h Low"
-                  sortKey="price_change_percentage_24h"
-                />
-                <TableHeaderCell
-                  label="24h High"
-                  sortKey="price_change_percentage_24h"
-                />
+                <TableHeaderCell label="24h Low" sortKey="24h_low" />
+                <TableHeaderCell label="24h High" sortKey="24h_high" />
 
                 <TableHeaderCell
                   className="text-end "

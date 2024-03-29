@@ -220,7 +220,7 @@ const AllCoinsTable = () => {
         ) : (
           <FaChevronDown className="p-0.5 pe-1 inline-flex" />
         )}
-        {crypto.price_change_percentage_24h.toFixed(2)}%
+        {crypto.price_change_percentage_24h?.toFixed(2)}%
       </td>
       <td className="px-4 py-2 text-end">
         ${addCommasToNumber(crypto.market_cap)}
@@ -415,6 +415,7 @@ const AllCoinsTable = () => {
         <Select
           isSearchable={false}
           defaultValue={itemsPerPage}
+          menuPlacement="bottom"
           classNames={{
             menu: () =>
               "bg-zinc-100 dark:bg-zinc-800  !rounded-lg overflow-hidden",
