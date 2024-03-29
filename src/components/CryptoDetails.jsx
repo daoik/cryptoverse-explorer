@@ -164,7 +164,7 @@ const CryptoDetails = ({ id }) => {
           </div>
         </div>
 
-        <div className="shadow m-1.5  w-full h-96 lg:h-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 ">
+        <div className="shadow m-1.5  w-full h-[420px] lg:h-auto rounded-lg bg-zinc-100 dark:bg-zinc-900 ">
           <div className="flex w-full mt-2 -mb-4 items-center justify-end">
             <div className="text-sm opacity-50">Currency:</div>
             <Select
@@ -183,7 +183,7 @@ const CryptoDetails = ({ id }) => {
                 placeholder: () => " bg-zinc-100  dark:text-zinc-100",
               }}
               defaultValue={{ value: "usd", label: "USD" }}
-              className="border-none outline-none scale-75 rounded-lg color-black"
+              className="border-none outline-none scale-75 rounded-lg color-black dark:opacity-50"
             />{" "}
             <div className="text-sm ">Timeframe:</div>
             <Select
@@ -196,10 +196,11 @@ const CryptoDetails = ({ id }) => {
                   " bg-zinc-100 dark:bg-zinc-800 hover:!bg-zinc-500",
                 menuPortal: () => "!z-50  ",
 
-                singleValue: () => "!dark:text-zinc-100 !text-zinc-800 ",
+                singleValue: () => "dark:!text-zinc-100 ",
                 control: () =>
                   " dark:!bg-zinc-800 !bg-zinc-100 !rounded-lg !h-full !cursor-pointer hover:!border hover:!border-[#646cff] ",
-                placeholder: () => " bg-zinc-100  dark:text-zinc-100",
+                placeholder: () =>
+                  " text-white !bg-zinc-100  dark:text-zinc-100",
               }}
               options={[
                 { value: 1, label: "24 hours" },
@@ -213,7 +214,7 @@ const CryptoDetails = ({ id }) => {
               onChange={(selectedOption) => {
                 setTimeframe(selectedOption.value);
               }}
-              className="border-none outline-none scale-75 rounded-lg color-black"
+              className="border-none z-40 outline-none scale-75 rounded-lg  "
             />
           </div>
           <div className=" w-full h-96">
