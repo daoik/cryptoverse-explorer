@@ -31,7 +31,6 @@ function CustomizedTick({ timeframe, ...props }) {
   const { x, y, stroke, payload } = props;
 
   const date = new Date(payload?.value);
-  console.log(timeframe);
   let content;
   if (timeframe === 1) {
     const formattedTime = date.toLocaleTimeString("en", {

@@ -14,7 +14,6 @@ const CardCoin = ({ coin }) => {
   };
 
   useEffect(() => {
-    console.log(coin);
     setCoinData(coin);
   }, []);
 
