@@ -375,14 +375,8 @@ const AllCoinsTable = () => {
                   sortKey="market_cap"
                 />
 
-                <TableHeaderCell
-                  label="24h Low"
-                  sortKey="price_change_percentage_24h"
-                />
-                <TableHeaderCell
-                  label="24h High"
-                  sortKey="price_change_percentage_24h"
-                />
+                <TableHeaderCell label="24h Low" sortKey="low_24h" />
+                <TableHeaderCell label="24h High" sortKey="high_24h" />
 
                 <TableHeaderCell
                   className="text-end "
