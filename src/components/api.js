@@ -1,4 +1,3 @@
-const APIKEY = import.meta.env.VITE_GECKO_API_KEY;
 const URL = import.meta.env.VITE_API_URL;
 const api = () => {};
 
