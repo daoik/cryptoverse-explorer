@@ -111,8 +111,8 @@ const AllCoinsTable = () => {
 
     if (key === "favorite") {
       sortedCryptoDataCopy = sortedCryptoDataCopy.sort((a, b) => {
-        const isAFavorite = favorites.includes(a.id);
-        const isBFavorite = favorites.includes(b.id);
+        const isAFavorite = favorites.indexOf(a.id);
+        const isBFavorite = favorites.indexOf(b.id);
 
         if (isAFavorite && !isBFavorite) return -1;
         if (!isAFavorite && isBFavorite) return 1;
@@ -255,7 +255,7 @@ const AllCoinsTable = () => {
     setFilteredResults(filtered);
   };
   const filtered = searchResults.filter((result) =>
-    result.name.toLowerCase().includes(query.toLowerCase())
+    result.name.toLowerCase().indexOf(query.toLowerCase())
   );
 
   return (

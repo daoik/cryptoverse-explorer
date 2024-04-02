@@ -74,8 +74,8 @@ const CryptoTop100Table = () => {
 
     if (key === "favorite") {
       sortedCryptoDataCopy = sortedCryptoDataCopy.sort((a, b) => {
-        const isAFavorite = favorites.includes(a.id);
-        const isBFavorite = favorites.includes(b.id);
+        const isAFavorite = favorites.indexOf(a.id);
+        const isBFavorite = favorites.indexOf(b.id);
 
         if (isAFavorite && !isBFavorite) return -1;
         if (!isAFavorite && isBFavorite) return 1;
