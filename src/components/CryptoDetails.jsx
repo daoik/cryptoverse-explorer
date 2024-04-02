@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import ReCharts from "./ReChart";
 import { addCommasToNumber } from "../scripts/addCommasToNumber";
 import { FaChevronDown, FaChevronUp, FaTag } from "react-icons/fa";
@@ -29,7 +29,6 @@ const replaceUnnecessary = (str) => {
 };
 const CryptoDetails = ({ id }) => {
   const [coin, setCoin] = useState();
-  const [percentageDifference, setPercentageDifference] = useState(0);
   const [timeframe, setTimeframe] = useState("1");
 
   useEffect(() => {
@@ -38,13 +37,12 @@ const CryptoDetails = ({ id }) => {
       .catch((error) => console.error("Error fetching crypto data:", error));
   }, [id]);
 
-  useEffect(() => {
-    setPercentageDifference(
-      calculatePercentageFull(
-        coin?.market_data?.current_price?.usd,
-        coin?.market_data?.low_24h.usd,
-        coin?.market_data?.high_24h.usd
-      )
+  const percentageDifference = useMemo(() => {
+    if (!coin) return 0;
+    return calculatePercentageFull(
+      coin?.market_data?.current_price?.usd,
+      coin?.market_data?.low_24h.usd,
+      coin?.market_data?.high_24h.usd
     );
   }, [coin]);
 
