@@ -1,13 +1,11 @@
 import React, { useEffect, Suspense } from "react";
-// import "./index.css";
-// import "./tailwind.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./bg.css";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 import useDarkModeStore from "./store/darkModeStore";
 import FavoritesPage from "./pages/FavoritesPage";
 import SideNavbar from "./components/SideNavbar";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 // Dynamically import pages
 const Top100Page = React.lazy(() => import("./pages/Top100Page"));
@@ -15,6 +13,7 @@ const CryptoDashboardPage = React.lazy(() =>
   import("./pages/CryptoDashboardPage")
 );
 const AllCoinsPage = React.lazy(() => import("./pages/AllCoinsPage"));
+const NotFoundPage = React.lazy(() => import("./pages/NotFoundPage")); // Import your 404 page component
 
 function App() {
   const darkMode = useDarkModeStore((state) => state.darkMode);
@@ -51,6 +50,8 @@ function App() {
               path="/cryptoverse-explorer/favorites"
               element={<FavoritesPage />}
             />
+            {/* Route for 404 page */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
         <Footer />
