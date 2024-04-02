@@ -149,9 +149,6 @@ const AllCoinsTable = () => {
     if (sortConfig.direction === "desc") {
       return a[sortConfig.key] > b[sortConfig.key] ? -1 : 1;
     }
-    if (sortConfig.direction === "asc") {
-      return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
-    }
     return 0;
   });
   const renderSortIcon = (key) => {
