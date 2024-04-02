@@ -251,11 +251,12 @@ const AllCoinsTable = () => {
     setShowClearButton(query !== "");
 
     // Filter search results based on the query
-    const filtered = searchResults.filter((result) =>
-      result.name.toLowerCase().includes(query.toLowerCase())
-    );
+
     setFilteredResults(filtered);
   };
+  const filtered = searchResults.filter((result) =>
+    result.name.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto ">
