@@ -47,23 +47,24 @@ const AllCoinsTable = () => {
       .then(setCryptoData)
       .catch((error) => console.error("Error fetching crypto data:", error));
   }, [page, itemsPerPage]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await searchCoins(searchQuery);
-        setFilteredResults(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    const debouncedFetchData = debounce(fetchData, 300); // Debounce for 300 milliseconds
-    if (searchQuery !== "") {
-      debouncedFetchData();
-    } else {
-      setFilteredResults([]);
+  const fetchData = async () => {
+    try {
+      const data = await searchCoins(searchQuery);
+      setFilteredResults(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
+  };
+  useEffect(() => {
+    const debouncedFetchData = debounce(() => {
+      if (searchQuery !== "") {
+        fetchData();
+      } else {
+        setFilteredResults([]);
+      }
+    }, 300);
+
+    debouncedFetchData();
 
     return () => {
       debouncedFetchData.cancel(); // Cancel debounce on component unmount

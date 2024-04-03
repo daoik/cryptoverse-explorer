@@ -24,24 +24,26 @@ const CryptoSearch = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const fetchData = async () => {
+    try {
+      const data = await searchCoins(searchQuery);
+      setFilteredResults(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   // Fetch data from CoinGecko API with debounce
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await searchCoins(searchQuery);
-        setFilteredResults(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    const debouncedFetchData = debounce(() => {
+      if (searchQuery !== "") {
+        fetchData();
+      } else {
+        setFilteredResults([]);
       }
-    };
+    }, 300);
 
-    const debouncedFetchData = debounce(fetchData, 300); // Debounce for 300 milliseconds
-    if (searchQuery !== "") {
-      debouncedFetchData();
-    } else {
-      setFilteredResults([]);
-    }
+    debouncedFetchData();
 
     return () => {
       debouncedFetchData.cancel(); // Cancel debounce on component unmount
