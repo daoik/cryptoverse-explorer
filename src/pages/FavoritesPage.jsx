@@ -12,7 +12,7 @@ const FavoritesPage = () => {
       <div className="text-xl opacity-80 mt-4  inline-flex items-center space-x-5">
         Cryptoverse <AiOutlineCompass className="mx-2" /> Explorer
       </div>
-      <div className="m-10 moon-bg ] text-start">
+      <div className="m-10  text-start">
         <div className="inline-flex w-full ">
           <div className="favorites w-full items-center  justify-center flex-col">
             <h2 className="text-3xl font-semibold text-center mb-4">
